@@ -16,15 +16,23 @@ def pp(d):
     plt.colorbar()
     plt.show()
 
-f_re = importdata("pot.txt")
-pp(f_re)
 
-# x = importdata('x.txt')
-# P = importdata('P.txt')
 
-# plt.plot(x,P)
-# # plt.xscale('log')
-# plt.show()
+
+
+def plot_elem(Z):
+    x = importdata(str(Z)+".txt")
+    s1,s2 = x.shape
+    f = np.fft.fftfreq(s2, 1/2)
+    plt.plot(f[0:int(s2/2)],x[0, 0:int(s2/2)])
+
+
+plot_elem(6)
+plot_elem(14)
+plot_elem(29)
+plot_elem(79)
+plot_elem(92)
+plt.show()
 
 # psi_re = importdata('psi_re.txt')
 # psi_im = importdata('psi_im.txt')
