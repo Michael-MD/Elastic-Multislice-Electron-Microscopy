@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <math.h>
 #include <tuple>
-
+#include <vector>
+using namespace std;
 
 #define complex_mult(cr, ci, ar, ai, br, bi) { \
 	cr = (ar) * (br) - (ai) * (bi);			   \
@@ -49,4 +50,47 @@ std::tuple<float*, float*> reciprocalPoints(int px, int py, float rx, float ry)
 
 	return {kx, ky};
 
+}
+
+
+void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vector<float>> &F_im, float lim)
+{
+	/*
+	bandwidth limits the signal, default is given by 2/3 k_max where k_max is the nyquist frequency.
+	*/
+	int px = F_re.size(), py = F_re[0].size();
+	float kmax = std::min(px / rx, py / ry) / 2; // nyquist frequency
+	float klim = lim*kmax;
+	
+	auto [kx,ky] = reciprocalPoints(px, py, rx, ry);
+	float k2;
+
+	for(int i = 0; i < px; i++)
+		for(int j = 0; j < py; j++)
+		{
+			k2 = sqrt(pow(kx[i],2) + pow(ky[j],2));
+			if(k2 >= klim)
+			{
+				F_re[i][j] = 0;
+				F_im[i][j] = 0;
+			}
+		}
+}
+
+
+void handamardProduct(vector<vector<float>> &A_re, vector<vector<float>> &A_im, vector<vector<float>> &B_re, vector<vector<float>> &B_im)
+{
+	/*
+	takes the handamard product of two matrices of the same dimensions and stores the result
+	in matrix B.
+	Note: To save time, this function doesn't check the dimensions.
+	*/
+	int px = A_re.size(), py = A_re[0].size();
+	for(int i = 0; i < px; i++)
+		for(int j = 0; j < py; j++)
+		{
+			complex_mult(	B_re[i][j], B_im[i][j],
+							A_re[i][j], A_im[i][j],
+							B_re[i][j], B_im[i][j] );
+		}
 }
