@@ -9,11 +9,10 @@ using namespace std;
 class Atom
 {
 	/*
-	data structure for storing crystal atomic structure and potential information assuming 
-	an orthorhombic system.
+	data structure for storing atom information such as potential assuming.
 	*/
 public:
-	// Atom();
+	Atom() {};
 	Atom(int Z, float xf, float yf, float zf, int px, int py, float rx, float ry)
 	{
 		this->Z = Z;
@@ -36,7 +35,8 @@ public:
 	void calcPotenial();
 
 public:
-	int px, py, rx, ry; 				// grid size in pixels
+	int px, py, rx, ry; 		// grid size in pixels
+	float occ, msd;				// occupancy, mean-square displacement
 	float xf, yf, zf; 			// fractional coordinates of atom
 	int Z;						// atomic number
 	vector<vector<float>> v;	// atom potential
