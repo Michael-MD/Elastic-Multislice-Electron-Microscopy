@@ -23,6 +23,10 @@ crystal::crystal(int px, int py, string filename)
 			>> ang[2];
 
 	Atom a;
+	a.px = px;
+	a.py = py;
+	a.rx = unitcell[0];
+	a.ry = unitcell[1];
 	while(xyzFile >> a.Z)
 	{
 		if(a.Z == -1) break;

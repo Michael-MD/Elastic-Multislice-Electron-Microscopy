@@ -57,7 +57,7 @@ tuple<vector<vector<float>>,vector<vector<float>>> Atom::structureFactor()
 	auto f_e = this->scatteringFactor();
 	auto F_re = f_e, F_im = f_e;
 
-	float qx, qy, c;
+	double qx, qy, c;
 	float x = this->xf * this->rx, y = this->yf * this->ry;
 	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
 
@@ -77,14 +77,11 @@ void Atom::calcPotential()
 {
 	/*
 	Calculates specimen potential in real space by iFFT eq. 5.21 of Kirkland. 
-	Result returned in Ang * kg-Ang^2 / s^2 which is a unit of energy times Ang. Recall, [J] = kg m^2/s^2.
+	Result excludes constants infront of eq. 5.21.
 	*/
 	auto [Fre, Fim] = this->structureFactor();
-	irad2FFT2(Fre,Fim);
-	// Since the FFT is linear, we may now multiply by the additional constant which defines the potential
-	float c = pow(h,2) / (2*pi * me * this->rx * this->ry);
-	for(auto &Fi : Fre)
-		for(auto &Fij : Fi)
-			Fij *= c;
+	// forward fft done here since Kirkland defines the FFT in the opposite convention
+	rad2FFT2(Fre,Fim);
+
 	this->v = Fre;
 }
