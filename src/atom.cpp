@@ -1,4 +1,4 @@
-#include "specimen_structure.h"
+#include "atom.h"
 #include "fft.h"
 #include "fourier_utils.h"
 #include "constants.h"
