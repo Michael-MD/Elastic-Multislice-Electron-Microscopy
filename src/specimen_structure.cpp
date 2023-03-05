@@ -75,8 +75,8 @@ tuple<vector<vector<float>>,vector<vector<float>>> SpecimenStructure::structureF
 vector<vector<float>> SpecimenStructure::V(int Z, float rx, float ry)
 {
 	/*
-	Calculates specimen potential given in eq. 5.21 of Kirkland. Result returned in kg-Ang^2 / s^2 which is 
-	a unit of energy. [J] = kg m^2/s^2.
+	Calculates specimen potential in real space by iFFT eq. 5.21 of Kirkland. 
+	Result returned in Ang * kg-Ang^2 / s^2 which is a unit of energy times Ang. Recall, [J] = kg m^2/s^2.
 	*/
 	auto [Fre, Fim] = this->structureFactor(Z, 0.,0., rx, ry);
 	irad2FFT2(Fre,Fim);
