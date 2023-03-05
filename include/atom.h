@@ -27,12 +27,12 @@ public:
 		this->ry = ry;
 
 		// calculate and store potential of atom
-		this->calcPotenial();
+		this->calcPotential();
 	}
 	
 	vector<vector<float>> scatteringFactor();
 	tuple<vector<vector<float>>,vector<vector<float>>> structureFactor();
-	void calcPotenial();
+	void calcPotential();
 
 public:
 	int px, py, rx, ry; 		// grid size in pixels

@@ -73,7 +73,7 @@ tuple<vector<vector<float>>,vector<vector<float>>> Atom::structureFactor()
 	return {F_re, F_im};
 }
 
-void Atom::calcPotenial()
+void Atom::calcPotential()
 {
 	/*
 	Calculates specimen potential in real space by iFFT eq. 5.21 of Kirkland. 

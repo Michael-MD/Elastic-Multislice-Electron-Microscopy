@@ -18,8 +18,10 @@ def pp(d):
 
 
 # *************** start potential ***************
-Fre = importdata('v.txt')
-pp(Fre)
+v = importdata('v.txt')
+sigma = .00072884
+t = np.exp(1j * sigma * v)
+
 
 # *************** end potential ***************
 
