@@ -2,6 +2,8 @@
 #define _SPECIMEN_STRUCTURE 1
 
 #include <vector>
+#include <complex>
+#include <tuple>
 using namespace std;
 
 class SpecimenStructure
@@ -22,6 +24,8 @@ public:
 	}	
 	
 	vector<vector<float>> scatteringFactor(int Z, float rx, float ry);
+	tuple<vector<vector<float>>,vector<vector<float>>> structureFactor(int Z, float xf, float yf, float rx, float ry);
+	vector<vector<float>> V(int Z, float rx, float ry);
 
 public:
 	int tx, ty;	// tiling in x and y directions

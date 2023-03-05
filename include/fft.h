@@ -1,11 +1,19 @@
+#ifndef _RAD2_FFT
+#define _RAD2_FFT 1
+
+#include <vector>
+using namespace std;
+
 // 1D FFT
-void rad2FFT(float xr[], float xi[], unsigned int N);
-void irad2FFT(float Xr[], float Xi[], unsigned int N);
+void rad2FFT(vector<float> &xr, vector<float> &xi);
+void irad2FFT(vector<float> &Xr, vector<float> &Xi);
 
 // 2D FFT
-void rad2FFT2(float **xr, float **xi, unsigned int Nx, unsigned int Ny);
-void irad2FFT2(float **Xr, float **Xi, unsigned int Nx, unsigned int Ny);
+void rad2FFT2(vector<vector<float>> &xr, vector<vector<float>> &xi);
+void irad2FFT2(vector<vector<float>> &Xr, vector<vector<float>> &Xi);
 
 //fftshift
-void fftshift(float xr[], float xi[], unsigned int N);
-void fftshift2(float **xr, float **xi, unsigned int Nx, unsigned int Ny);
+void fftshift(vector<float> &xr, vector<float> &xi);
+void fftshift2(vector<vector<float>> &xr, vector<vector<float>> &xi);
+
+#endif

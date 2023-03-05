@@ -1,6 +1,9 @@
 #include "constants.h"
+#include <complex>
 
+extern const std::complex<double> i1(0, 1);				// complex i
 extern const float pi 	= 3.14159265359;
+extern const float pi2 	= 2 * 3.14159265359;			// 2pi
 extern const float h 	= 6.62607004e-14; 				// plank constant [kg-angstrom^2/s]
 extern const float hbar = h / (2 * pi); 				// plank constant [kg-angstrom^2/s]
 extern const float c 	= 299792458; 					// speed of light [m/s]

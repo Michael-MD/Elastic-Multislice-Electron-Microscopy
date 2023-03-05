@@ -1,7 +1,11 @@
 #ifndef _H_CONSTANTS
 #define _H_CONSTANTS 1
 
+#include <complex>
+
+extern const std::complex<double> i1;				// complex i
 extern const float pi;
+extern const float pi2;		// 2pi
 extern const float h; 		// plank constant [kg-angstrom/s]
 extern const float hbar; 	// plank constant [kg-angstrom/s]
 extern const float c; 		// speed of light [m/s]
