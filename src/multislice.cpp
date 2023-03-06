@@ -30,11 +30,11 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	this->ty = ty;
 	this->tz = tz;
 
+	this->rx = c.x() * this->tx;
+	this->ry = c.y() * this->ty;
+
 	// currently assumes all atoms on single layer
 	crystal c(px, py, filename);
-
-	this->rx = c.atoms[0].rx;
-	this->ry = c.atoms[0].ry;
 
 	vector<Atom> layer;
 	for(auto atom : c.atoms)
@@ -62,10 +62,10 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	// inverse fourier transform result, forward done to match kirkland's convention
 	rad2FFT2(t_re, t_im);
 
-	// multiply constants to convert v -> sigma * v
+	// multiply by constants to sigma * v
 	float gamma = relativistic_mass(this->E) / me;
 	float lambda = relativistic_wavelength(this->E);
-	float prefac = lambda * gamma / (this->rx * this->ry);
+	float prefac = lambda * gamma / (c.x() * c.y());
 	float tmp;
 	for(long unsigned i = 0; i < t_re.size(); i++)
 		for(long unsigned j = 0; j < t_re[0].size(); j++)
@@ -75,7 +75,7 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 			t_im[i][j] = sin(tmp);
 		}
 
-	bandwidthLimit(this->rx, this->ry, t_re, t_im);
+	bandwidthLimit(c.x(), c.y(), t_re, t_im);
 
 	this->t_re.push_back(t_re);
 	this->t_im.push_back(t_im);
