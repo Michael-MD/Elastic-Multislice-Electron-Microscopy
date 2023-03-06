@@ -15,11 +15,12 @@ class multislice
 	*/
 public:
 	multislice(float E, int px, int py, int tx, int ty, int tz, string filename);
+	void calcTransmissionFunction();
 
 public:
 	int tx, ty, tz;					// unitcell tiling
 	int px, py;						// grid pixel dimensions
-	float rx, ry;
+	float rx, ry, rx_u, ry_u;		// total real space dimensions and of unit cell
 	float E;
 	vector<vector<Atom>> layers;	// contains vector of atoms in each layer of crystal
 	vector<vector<vector<float>>>	t_re;	// transmission function for each layer

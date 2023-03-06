@@ -55,7 +55,7 @@ std::tuple<float*, float*> reciprocalPoints(int px, int py, float rx, float ry)
 }
 
 
-void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vector<float>> &F_im, float lim, bool k_space)
+void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vector<float>> &F_im, bool kspace, float lim)
 {
 	/*
 	bandwidth limits the signal, default is given by 2/3 k_max where k_max is the nyquist frequency.
@@ -67,7 +67,7 @@ void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vect
 	auto [kx,ky] = reciprocalPoints(px, py, rx, ry);
 	float k;
 
-	if(!k_space) rad2FFT2(F_re, F_im);
+	if(!kspace) rad2FFT2(F_re, F_im);
 
 	for(int i = 0; i < px; i++)
 		for(int j = 0; j < py; j++)
@@ -81,7 +81,7 @@ void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vect
 			}
 		}
 
-	if(!k_space)
+	if(!kspace)
 		irad2FFT2(F_re, F_im);
 }
 
