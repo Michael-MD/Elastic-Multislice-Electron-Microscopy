@@ -1,9 +1,11 @@
 #include "fourier_utils.h"
 #include <stdlib.h>
 #include <algorithm>
+#include "fft.h"
 #include <math.h>
 #include <tuple>
 #include <vector>
+#include <iostream>
 using namespace std;
 
 #define complex_mult(cr, ci, ar, ai, br, bi) { \
@@ -44,8 +46,8 @@ std::tuple<float*, float*> reciprocalPoints(int px, int py, float rx, float ry)
 		if(nx > n0_x) nx = n1_x;
 		if(ny > n0_y) ny = n1_y;
 
-		(kx)[i] = (nx++) * cx;
-		(ky)[i] = (ny++) * cy;
+		kx[i] = (nx++) * cx;
+		ky[i] = (ny++) * cy;
 	}
 
 	return {kx, ky};
@@ -53,7 +55,7 @@ std::tuple<float*, float*> reciprocalPoints(int px, int py, float rx, float ry)
 }
 
 
-void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vector<float>> &F_im, float lim)
+void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vector<float>> &F_im, float lim, bool k_space)
 {
 	/*
 	bandwidth limits the signal, default is given by 2/3 k_max where k_max is the nyquist frequency.
@@ -63,18 +65,24 @@ void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vect
 	float klim = lim*kmax;
 	
 	auto [kx,ky] = reciprocalPoints(px, py, rx, ry);
-	float k2;
+	float k;
+
+	if(!k_space) rad2FFT2(F_re, F_im);
 
 	for(int i = 0; i < px; i++)
 		for(int j = 0; j < py; j++)
 		{
-			k2 = sqrt(pow(kx[i],2) + pow(ky[j],2));
-			if(k2 >= klim)
+			k = sqrt(pow(kx[i],2) + pow(ky[j],2));
+
+			if(k >= klim)
 			{
 				F_re[i][j] = 0;
 				F_im[i][j] = 0;
 			}
 		}
+
+	if(!k_space)
+		irad2FFT2(F_re, F_im);
 }
 
 

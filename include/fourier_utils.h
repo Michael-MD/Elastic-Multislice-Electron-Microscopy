@@ -10,7 +10,7 @@ useful functions for doing various tasks to do with reciprical space and matrix 
 */
 
 std::tuple<float*, float*> reciprocalPoints(int px, int py, float rx, float ry);
-void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vector<float>> &F_im, float lim = .66);
+void bandwidthLimit(float rx, float ry, vector<vector<float>> &F_re, vector<vector<float>> &F_im, float lim = .66, bool k_space = false);
 
 void handamardProduct(vector<vector<float>> &A_re, vector<vector<float>> &A_im, vector<vector<float>> &B_re, vector<vector<float>> &B_im);
 void addMatrix(vector<vector<float>> &A_re, vector<vector<float>> &A_im, vector<vector<float>> &B_re, vector<vector<float>> &B_im);

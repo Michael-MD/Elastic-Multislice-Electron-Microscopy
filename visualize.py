@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 s=50
-def importdata(filename,a,b):
+def importdata(filename, a=0, b=0):
     with open(filename) as f:
         lines = f.readlines()
         x = np.array(([line.split() for line in lines]))
@@ -40,7 +40,22 @@ def bw_limit(x):
     return x
 
 
-
+t_re = importdata('t_re.txt')
+t_im = importdata('t_im.txt')
+tre_line = (t_re)[int(512/2),:]
+tim_line = (t_im)[int(512/2),:]
+r = np.linspace(0,50,512)
+plt.subplot(2,1,1)
+plt.title('Fig. 5.11 of Kirkland')
+plt.plot(r,(tre_line))
+plt.ylabel('Real Part')
+plt.subplot(2,1,2)
+plt.ylim([0,1.2])
+plt.plot(r,(tim_line))
+plt.ylabel('Imag. Part')
+plt.xlabel('position x (in Ang.)')
+plt.ylim([0,1])
+plt.show()
 
 """
 # *************** start transmission function ***************
@@ -54,9 +69,6 @@ v = c+si+cu+au+u
 lam = 1/39.87345849884623
 gamma = 1.39139023969897
 v= np.real(v)*lam* gamma / (50**2)
-# pp(v)
-# # sigma = 0.0000453446e10   # 200keV
-# # sigma = .03
 t = np.exp(1j * v)
 t = bw_limit(t)
 # pp(np.real(t))
@@ -74,8 +86,9 @@ plt.plot(r,(tim_line))
 plt.ylabel('Imag. Part')
 plt.xlabel('position x (in Ang.)')
 plt.ylim([0,1])
-plt.savefig('Fig 5.11.jpg')
+# plt.savefig('Fig 5.11.jpg')
 plt.show()
+
 
 # *************** end transmission function ***************
 
