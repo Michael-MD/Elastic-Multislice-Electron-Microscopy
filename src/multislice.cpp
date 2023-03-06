@@ -65,7 +65,7 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	// multiply constants to convert v -> sigma * v
 	float gamma = relativistic_mass(this->E) / me;
 	float lambda = relativistic_wavelength(this->E);
-	float prefac = lambda * gamma / (this->rx * this->rx);
+	float prefac = lambda * gamma / (this->rx * this->ry);
 	float tmp;
 	for(long unsigned i = 0; i < t_re.size(); i++)
 		for(long unsigned j = 0; j < t_re[0].size(); j++)
