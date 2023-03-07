@@ -20,7 +20,7 @@ public:
 
 public:
 	int tx, ty, tz;					// unitcell tiling
-	int px_u, py_u;					// unitcell grid pixel dimensions
+	int px_u, py_u, px, py;					// unitcell grid pixel dimensions
 	float rx, ry, rx_u, ry_u;		// total real space dimensions and of unit cell
 	float E;
 	vector<layer> layers;	// contains vector of atoms in each layer of crystal

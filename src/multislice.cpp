@@ -26,6 +26,9 @@ multislice::multislice(float E, int px_u, int py_u, int tx, int ty, int tz, stri
 
 	this->px_u = px_u;
 	this->py_u = py_u;
+	this->px = px_u * tx;
+	this->py = py_u * ty;
+
 
 	this->tx = tx;
 	this->ty = ty;
@@ -39,7 +42,7 @@ multislice::multislice(float E, int px_u, int py_u, int tx, int ty, int tz, stri
 	this->ry = c.y() * this->ty;
 
 	// arrange atoms in layers, currently all placed in one layer
-	layer l(E, px_u, py_u, this->rx_u, this->ry_u, c.z());
+	layer l(E, px_u, py_u, this->rx_u, this->ry_u, this->tx, this->ty, c.z());
 	vector<Atom> atoms;
 	for(auto atom : c.atoms)
 		atoms.push_back(atom);
@@ -53,14 +56,14 @@ multislice::multislice(float E, int px_u, int py_u, int tx, int ty, int tz, stri
 
 
 	// ****** initilize with plane wave of unit intensity at each point, currently unnormalized ******
-	vector<vector<float>> psi_re(this->px_u);
+	vector<vector<float>> psi_re(this->px);
 	for(auto &psii : psi_re)
-		psii = vector<float>(this->py_u, 1);
+		psii = vector<float>(this->py, 1);
 	this->psi_re = psi_re;
 
-	vector<vector<float>> psi_im(this->px_u);
+	vector<vector<float>> psi_im(this->px);
 	for(auto &psii : psi_im)
-		psii = vector<float>(this->py_u, 0);
+		psii = vector<float>(this->py, 0);
 	this->psi_im = psi_im;
 }
 
