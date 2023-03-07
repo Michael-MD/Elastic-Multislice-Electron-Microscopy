@@ -14,6 +14,26 @@
 #include <iostream>
 using namespace std;
 
+layer::layer(float E, int px_u, int py_u, float rx_u, float ry_u, int tx, int ty, float deltaz) 
+	{
+		this->E = E;
+		this->px_u = px_u;
+		this->py_u = py_u;
+		this->px = px_u * tx;
+		this->py = py_u * ty;
+
+		this->rx_u = rx_u;
+		this->ry_u = ry_u;
+		this->rx = rx_u * tx;
+		this->ry = ry_u * ty;
+
+		this->tx = tx;
+		this->ty = ty;
+
+		this->deltaz = deltaz;
+	};
+
+
 void layer::calcTransmissionFunction()
 {
 	/*
@@ -50,11 +70,11 @@ void layer::calcTransmissionFunction()
 			t_im_u[i][j] = sin(tmp);
 		}
 
-	bandwidthLimit(this->rx_u, this->ry_u, t_re_u, t_im_u);
 	this->t_re_u = t_re_u;
 	this->t_im_u = t_im_u;
 
 	tile(this->t_re, this->t_im, t_re_u, t_im_u, this->tx, this->ty);
+	bandwidthLimit(this->rx, this->ry, this->t_re, this->t_im);
 }
 
 
@@ -68,28 +88,28 @@ void layer::calcFreeSpacePropagator()
 	*/
 
 	// allocate memory
-	vector<vector<float>> P_re_u(this->px_u);
-	for(auto &pi : P_re_u)
-		pi = vector<float>(this->py_u, 0.);
-	auto P_im_u = P_re_u;
+	vector<vector<float>> P_re(this->px);
+	for(auto &Pi : P_re)
+		Pi = vector<float>(this->py, 0.);
+	auto P_im = P_re;
 	
 	float c = -pi * relativistic_wavelength(E) * deltaz;
 	float phi;
 
 
-	auto [kx, ky] = reciprocalPoints(this->px_u, this->py_u, this->rx_u, this->ry_u);
+	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
 
-	for(int i = 0; i < this->px_u; i++)
-		for(int j = 0; j < this->py_u; j++)
+	for(int i = 0; i < this->px; i++)
+		for(int j = 0; j < this->py; j++)
 		{
 			phi = c * (pow(kx[i],2) + pow(ky[j],2));
-			P_re_u[i][j] = cos(phi);
-			P_im_u[i][j] = sin(phi);
+			// cout << this->rx;
+			P_re[i][j] = cos(phi);
+			P_im[i][j] = sin(phi);
 		}
 
-	bandwidthLimit(this->rx_u, this->ry_u, P_re_u, P_im_u);
-	this->P_re_u = P_re_u;
-	this->P_im_u = P_im_u;
+	bandwidthLimit(this->rx, this->ry, P_re, P_im);
+	this->P_re = P_re;
+	this->P_im = P_im;
 
-	tile(this->P_re, this->P_im, P_re_u, P_im_u, this->tx, this->ty);
 }

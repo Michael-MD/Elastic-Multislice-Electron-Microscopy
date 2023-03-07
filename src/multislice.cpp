@@ -13,7 +13,7 @@
 #include <iostream>
 using namespace std;
 
-multislice::multislice(float E, int px_u, int py_u, int tx, int ty, int tz, string filename)
+multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string filename)
 {
 	/*
 	E: beam energy
@@ -24,10 +24,10 @@ multislice::multislice(float E, int px_u, int py_u, int tx, int ty, int tz, stri
 	
 	this->E = E;
 
-	this->px_u = px_u;
-	this->py_u = py_u;
-	this->px = px_u * tx;
-	this->py = py_u * ty;
+	this->px_u = px / tx;
+	this->py_u = py / ty;
+	this->px = px;
+	this->py = py;
 
 
 	this->tx = tx;
@@ -46,7 +46,6 @@ multislice::multislice(float E, int px_u, int py_u, int tx, int ty, int tz, stri
 	vector<Atom> atoms;
 	for(auto atom : c.atoms)
 		atoms.push_back(atom);
-
 
 	l.atoms = atoms;
 	l.calcTransmissionFunction();

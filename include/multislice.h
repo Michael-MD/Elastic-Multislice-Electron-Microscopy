@@ -21,7 +21,7 @@ public:
 public:
 	int tx, ty, tz;					// unitcell tiling
 	int px_u, py_u, px, py;					// unitcell grid pixel dimensions
-	float rx, ry, rx_u, ry_u;		// total real space dimensions and of unit cell
+	float rx_u, ry_u, rx, ry;		// total real space dimensions and of unit cell
 	float E;
 	vector<layer> layers;	// contains vector of atoms in each layer of crystal
 	vector<vector<float>> psi_re, psi_im; // wave function

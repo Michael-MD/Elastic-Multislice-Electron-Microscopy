@@ -41,7 +41,7 @@ def bw_limit(x):
 
 
 psi = importdata('psi_re.txt') + 1j * importdata('psi_im.txt')
-intensity = np.abs(psi)**2 / (512*2)**2
+intensity = np.abs(psi)**2 / (512)**2
 print(sum(sum(intensity)))
 plt.imshow(psi.astype(float),'gray')
 plt.colorbar()
