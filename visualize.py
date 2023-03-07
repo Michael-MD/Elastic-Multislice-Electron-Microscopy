@@ -40,6 +40,15 @@ def bw_limit(x):
     return x
 
 
+psi = importdata('psi_re.txt') + 1j * importdata('psi_im.txt')
+intensity = np.abs(psi)**2 / 1024**2
+print(sum(sum(intensity)))
+# plt.imshow(psi.astype(float),'gray')
+# plt.colorbar()
+# plt.show()
+
+"""
+# transmission function test as calculated from c++ program to produce fig 5.11 of kirkland
 t_re = importdata('t_re.txt')
 t_im = importdata('t_im.txt')
 tre_line = (t_re)[int(512/2),:]
@@ -57,7 +66,6 @@ plt.xlabel('position x (in Ang.)')
 plt.ylim([0,1])
 plt.show()
 
-"""
 # *************** start transmission function ***************
 
 c = importdata('c.txt', 25, 5)
@@ -68,8 +76,9 @@ u = importdata('u.txt', 25, 45)
 v = c+si+cu+au+u
 lam = 1/39.87345849884623
 gamma = 1.39139023969897
-v= np.real(v)*lam* gamma / (50**2)
+v= np.real(v)*lam* gamma / (50*50)
 t = np.exp(1j * v)
+# t = importdata('t_re.txt') + 1j*importdata('t_im.txt')
 t = bw_limit(t)
 # pp(np.real(t))
 t = t[int(512/2),:]
@@ -88,6 +97,7 @@ plt.xlabel('position x (in Ang.)')
 plt.ylim([0,1])
 # plt.savefig('Fig 5.11.jpg')
 plt.show()
+
 
 
 # *************** end transmission function ***************

@@ -3,6 +3,7 @@
 #include "fourier_utils.h"
 #include "constants.h"
 #include "fft.h"
+#include "layer.h"
 #include "relativistic_corrections.h"
 #include <math.h>
 #include <string>
@@ -12,7 +13,7 @@
 #include <iostream>
 using namespace std;
 
-multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string filename)
+multislice::multislice(float E, int px_u, int py_u, int tx, int ty, int tz, string filename)
 {
 	/*
 	E: beam energy
@@ -23,72 +24,54 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	
 	this->E = E;
 
-	this->px = px;
-	this->py = py;
+	this->px_u = px_u;
+	this->py_u = py_u;
 
 	this->tx = tx;
 	this->ty = ty;
 	this->tz = tz;
 
-	// currently assumes all atoms on single layer
-	crystal c(px, py, filename);
+	// ****** currently assumes all atoms on single layer ******
+	crystal c(this->px_u, this->py_u, filename);
 	this->rx_u = c.x();
 	this->ry_u = c.y();
 	this->rx = c.x() * this->tx;
 	this->ry = c.y() * this->ty;
 
-
-	vector<Atom> layer;
+	// arrange atoms in layers, currently all placed in one layer
+	layer l(E, px_u, py_u, this->rx_u, this->ry_u, c.z());
+	vector<Atom> atoms;
 	for(auto atom : c.atoms)
-		layer.push_back(atom);
-	layers.push_back(layer);
+		atoms.push_back(atom);
+
+
+	l.atoms = atoms;
+	l.calcTransmissionFunction();
+	l.calcFreeSpacePropagator();
+	layers.push_back(l);
+
+
+
+	// ****** initilize with plane wave of unit intensity at each point, currently unnormalized ******
+	vector<vector<float>> psi_re(this->px_u);
+	for(auto &psii : psi_re)
+		psii = vector<float>(this->py_u, 1);
+	this->psi_re = psi_re;
+
+	vector<vector<float>> psi_im(this->px_u);
+	for(auto &psii : psi_im)
+		psii = vector<float>(this->py_u, 0);
+	this->psi_im = psi_im;
 }
 
-void multislice::calcTransmissionFunction()
+
+void multislice::propagateWaveFunctionThroughCrystal()
 {
-	/*
-	Calculate transmission functions for each layer and store in t_re and t_im members.
-	The result has been bandwidth limited appropriately.
-	*/
-	
-	// create empty matrix structure
-	vector<vector<float>> t_re(this->px);
-	for(auto &ti : t_re)
-		ti = vector<float>(this->py, 0.);
-	vector<vector<float>> t_im = t_re;
-	
-	// add up structure factors and assumes single layer
-	for(auto layer : this->layers)
-		for(auto atom : layer)
-		{
-			auto [F_re, F_im] = atom.structureFactor();
-			addMatrix(t_re, t_im, F_re, F_im);
-		}
-
-	bandwidthLimit(this->rx_u, this->ry_u, t_re, t_im, true); // bandwidth limit v according to Kirkland
-	rad2FFT2(t_re, t_im); // inverse fourier transform result, forward done to match kirkland's convention
-
-	// multiply by constants to sigma * v
-	float gamma = relativistic_mass(this->E) / me;
-	float lambda = relativistic_wavelength(this->E);
-	float prefac = lambda * gamma / (this->rx_u * this->ry_u);
-	float tmp;
-	for(long unsigned i = 0; i < t_re.size(); i++)
-		for(long unsigned j = 0; j < t_re[0].size(); j++)
-		{
-			tmp = prefac * t_re[i][j];
-			t_re[i][j] = cos(tmp);
-			t_im[i][j] = sin(tmp);
-		}
-
-	bandwidthLimit(this->rx_u, this->ry_u, t_re, t_im);
-
-	this->t_re.push_back(t_re);
-	this->t_im.push_back(t_im);
+	for(auto layer : layers)
+	{
+		handamardProduct(this->psi_re, this->psi_im, layer.t_re, layer.t_im);
+		irad2FFT2(this->psi_re, this->psi_im);
+		handamardProduct(this->psi_re, this->psi_im, layer.P_re, layer.P_im);
+		rad2FFT2(this->psi_re, this->psi_im);
+	}
 }
-
-
-
-
-
-
