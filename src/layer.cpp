@@ -44,7 +44,7 @@ void layer::calcTransmissionFunction()
 	// create empty matrix structure and init. with zeros.
 	vector<vector<float>> t_re_u(this->px_u);
 	for(auto &ti : t_re_u)
-		ti = vector<float>(this->py_u, 0.);
+		ti = vector<float>(this->px_u, 0.);
 	t_im_u = t_re_u;
 	
 	// add up structure factors and assumes single layer
@@ -60,7 +60,7 @@ void layer::calcTransmissionFunction()
 	// multiply by constants to sigma * v
 	float gamma = relativistic_mass(this->E) / me;
 	float lambda = relativistic_wavelength(this->E);
-	double prefac = lambda * gamma / (this->rx_u * this->ry_u);
+	double prefac = lambda * gamma / (this->rx_u * this->ry_u); 	// kirkland makes mistake here in Fig 5.11
 	double tmp;
 	for(long unsigned i = 0; i < t_re_u.size(); i++)
 		for(long unsigned j = 0; j < t_re_u[0].size(); j++)
@@ -74,7 +74,7 @@ void layer::calcTransmissionFunction()
 	this->t_im_u = t_im_u;
 
 	tile(this->t_re, this->t_im, t_re_u, t_im_u, this->tx, this->ty);
-	bandwidthLimit(this->rx, this->ry, this->t_re, this->t_im);
+	// bandwidthLimit(this->rx, this->ry, this->t_re, this->t_im);
 }
 
 

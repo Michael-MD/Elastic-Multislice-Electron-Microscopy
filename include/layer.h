@@ -20,7 +20,7 @@ public:
 public:
 	float E;
 	vector<Atom> atoms;
-	int px_u, py_u, px, py;							// unitcell grid pixel dimensions
+	int px_u, py_u, px, py;					// unitcell grid pixel dimensions
 	int tx, ty;								// tiling
 	float rx_u, ry_u, rx, ry;
 	float deltaz;							// slice thickness

@@ -13,7 +13,7 @@
 #include <iostream>
 using namespace std;
 
-multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string filename)
+multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s)
 {
 	/*
 	E: beam energy
@@ -41,16 +41,60 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	this->rx = c.x() * this->tx;
 	this->ry = c.y() * this->ty;
 
-	// arrange atoms in layers, currently all placed in one layer
-	layer l(E, px_u, py_u, this->rx_u, this->ry_u, this->tx, this->ty, c.z());
-	vector<Atom> atoms;
-	for(auto atom : c.atoms)
-		atoms.push_back(atom);
+	/*
+							**** create layers ****
+	array of slices in fractions of total supercell z-depth. For example,
+	splitting sample in thirds is given by s = [.33, .66]. Then each layer is stored
+	in an array of AtomicStructure data types.
+	*/
 
-	l.atoms = atoms;
-	l.calcTransmissionFunction();
-	l.calcFreeSpacePropagator();
-	layers.push_back(l);
+	auto lindex = [s](float z)
+	{
+		/*
+		returns index of layer e.g. if s = [.33,.66], then lindex(.2) = 0, lindex(.5) = 1, lindex(.8) = 2.
+		Using this scheme the z-coordinate of the unit cell is parallel with the optical axis.
+		*/
+		int Nl = s.size();
+		for (int nl = 0; nl < Nl; nl++)
+	      if (z < s[nl]) return nl;
+	    return Nl;
+	};
+
+	float rz_u = c.z();
+	auto th =[s, rz_u] (int i) {
+		/*
+		returns thinkess of ith slice.
+		*/
+	    int Nl = s.size();
+	    if(i == Nl) return (1 - s[i-1]) * rz_u;
+	    else if(i == 0) return s[i] * rz_u;
+	    return (s[i] - s[i-1]) * rz_u;
+	  };
+
+
+	// arrange atoms in layers, currently all placed in one layer
+	int ns = s.size() + 1;
+
+	vector<layer> layers(ns, layer(E, px_u, py_u, this->rx_u, this->ry_u, this->tx, this->ty, c.z()));
+	for(int i = 0; i < ns; i++)
+	{
+		layers[i].deltaz = th(i);
+	}
+
+	int j;
+	for(auto atom : c.atoms)
+	{
+		j = lindex(atom.zf * c.z());
+		layers[j].atoms.push_back(atom);
+	}
+
+	for(auto &layer : layers)
+	{
+		layer.calcTransmissionFunction();
+		layer.calcFreeSpacePropagator();
+	}
+
+	this->layers = layers;
 
 
 

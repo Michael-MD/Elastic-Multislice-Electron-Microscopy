@@ -15,7 +15,7 @@ class multislice
 	methods to propogate wave function and calculating image intensity.
 	*/
 public:
-	multislice(float E, int px, int py, int tx, int ty, int tz, string filename);
+	multislice(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s);
 	void propagateWaveFunctionThroughCrystal();
 
 public:
