@@ -16,7 +16,9 @@ class multislice
 	*/
 public:
 	multislice(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s);
+	void makePsi0();
 	void propagateWaveFunctionThroughCrystal();
+	void passThroughObjectiveLens(float Cs, float deltaf, float alpha_max);
 
 public:
 	int tx, ty, tz;					// unitcell tiling

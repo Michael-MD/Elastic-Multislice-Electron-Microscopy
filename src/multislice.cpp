@@ -5,6 +5,7 @@
 #include "fft.h"
 #include "layer.h"
 #include "relativistic_corrections.h"
+#include "general_purpose_utils.h"
 #include <math.h>
 #include <string>
 #include <fstream>
@@ -77,9 +78,7 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 
 	vector<layer> layers(ns, layer(E, px_u, py_u, this->rx_u, this->ry_u, this->tx, this->ty, c.z()));
 	for(int i = 0; i < ns; i++)
-	{
 		layers[i].deltaz = th(i);
-	}
 
 	int j;
 	for(auto atom : c.atoms)
@@ -113,11 +112,63 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 
 void multislice::propagateWaveFunctionThroughCrystal()
 {
-	for(auto layer : layers)
-	{
-		handamardProduct(this->psi_re, this->psi_im, layer.t_re, layer.t_im);
-		irad2FFT2(this->psi_re, this->psi_im);
-		handamardProduct(this->psi_re, this->psi_im, layer.P_re, layer.P_im);
-		rad2FFT2(this->psi_re, this->psi_im);
-	}
+	for(int i = 0; i < this->tz; i++)
+		for(auto layer : layers)
+		{
+			handamardProduct(this->psi_re, this->psi_im, layer.t_re, layer.t_im);
+			irad2FFT2(this->psi_re, this->psi_im);
+			handamardProduct(this->psi_re, this->psi_im, layer.P_re, layer.P_im);
+			rad2FFT2(this->psi_re, this->psi_im);
+		}
+}
+
+
+void multislice::passThroughObjectiveLens(float Cs, float deltaf, float alpha_max)
+{
+	/*
+	implements objective lens frequency response in back-focal plane. No need for bandwidth
+	limiting since this will be multiplied by the wave fucntion which is already bandwidth limited.
+	Models defocus and third-order spherical aberration only. Also implements aperature.
+	Cs[mm]
+	deltaf[Ang]
+	alphap_max[mrad]
+	*/
+	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
+	float lambda = relativistic_wavelength(this->E);
+	float lambda2 = pow(lambda, 2);
+
+	Cs *= 1e7;
+	alpha_max *= 1e-3;
+
+	vector<vector<float>> H0_re(this->px);
+	for(auto &H0_rei : H0_re)
+		H0_rei = vector<float>(this->py);
+	auto H0_im = H0_re;
+
+	double k2, chi;
+	for(int i = 0; i < this->px; i++)
+		for(int j = 0; j < this->py; j++)
+		{
+			k2 = pow(kx[i],2) + pow(ky[j],2);
+			if(lambda * sqrt(k2) < alpha_max)
+			{
+				chi = pi * lambda * k2 * (.5 * Cs * lambda2 * k2 - deltaf);
+				H0_re[i][j] = cos(chi);
+				H0_im[i][j] = -sin(chi);
+			}
+			else
+			{
+				H0_re[i][j] = 0;
+				H0_im[i][j] = 0;
+			}
+		}
+	
+	writeToFile("H0_re.txt", H0_re);
+	writeToFile("H0_im.txt", H0_im);
+
+	// pass through objective lens
+	// irad2FFT2(this->psi_re, this->psi_im);
+	// handamardProduct(this->psi_re, this->psi_im, H0_re, H0_im);
+	// rad2FFT2(this->psi_re, this->psi_im);
+
 }

@@ -40,27 +40,24 @@ def bw_limit(x):
     return x
 
 
-psi = importdata('t_re.txt') + 1j*importdata('t_im.txt')
-dim = 1024
+psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
+H0 = importdata('H0_re.txt') + 1j*importdata('H0_im.txt')
+psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
+# psi = np.abs(psi)**2
+print(np.min(np.abs(psi)**2), np.max(np.abs(psi)**2))
+plt.imshow(np.abs(psi)**2,'gray')
+plt.colorbar()
+plt.show()
+chi =importdata('chi.txt') 
+
+dim = 512
 
 
-# # c = importdata('c.txt', 25, 5)
-# # si = importdata('si.txt', 25, 15)
-# # cu = importdata('cu.txt', 25, 25)
-# # au = importdata('au.txt', 25, 35)
-# # u = importdata('u.txt', 25, 45)
-# # v = c+si+cu+au+u
-# lam = 1/39.87345849884623
-# gamma = 1.39139023969897
-# # v= np.real(v)*lam* gamma / (50*50)
-# # t = np.exp(1j * v)
-# t = importdata('t_re.txt') + 1j*importdata('t_im.txt')
-# psi = bw_limit(t)
-
-# pass through lens
+# ****pass through lens****
 s1,s2 = psi.shape
 kx = np.fft.fftfreq(s1, 1/(dim/50))
 ky = np.fft.fftfreq(s2, 1/(dim/50))
+print(max(kx), max(ky))
 kx, ky = np.meshgrid(kx, ky)
 k2 = kx**2 + ky**2
 
@@ -68,25 +65,25 @@ alphamax = 10.37 * 1e-3 # rad
 deltaf =  700 # Ang
 Cs = 1.3 * 1e7    # Ang
 
-# Cs = 0
-# deltaf = 0
+
 lam = 1/39.87345849884623
 gamma = 1.39139023969897
 
 A = np.zeros(psi.shape)
 mask = lam * np.sqrt(k2) < alphamax
 A[mask] = 1
-chi = np.pi * lam * k2 * (.5 * Cs * lam**2 * k2 - deltaf)
-# plt.imshow(chi)
-# plt.colorbar()
-# plt.show()
-H0 = np.exp(-1j * chi) * A
-psi = np.fft.fft2( np.fft.ifft2(psi) * H0 );
+# chi = np.pi * lam * k2 * (.5 * Cs * lam**2 * k2 - deltaf)
+# H0 = (np.cos(-chi) - 1j*np.sin(chi))* A
 
+
+psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
+print(np.min(np.abs(psi)**2), np.max(np.abs(psi)**2))
 print(sum(sum(intensity:=np.abs(psi)**2)/(dim**2)))
 plt.imshow(intensity, 'gray')
 plt.colorbar()
 plt.show()
+
+
 
 # plt.imshow(np.real(np.fft.fftshift(H0)).astype(float),'gray')
 # plt.colorbar()
