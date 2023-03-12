@@ -94,19 +94,6 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	}
 
 	this->layers = layers;
-
-
-
-	// ****** initilize with plane wave of unit intensity at each point, currently unnormalized ******
-	vector<vector<float>> psi_re(this->px);
-	for(auto &psii : psi_re)
-		psii = vector<float>(this->py, 1);
-	this->psi_re = psi_re;
-
-	vector<vector<float>> psi_im(this->px);
-	for(auto &psii : psi_im)
-		psii = vector<float>(this->py, 0);
-	this->psi_im = psi_im;
 }
 
 
@@ -163,8 +150,8 @@ void multislice::passThroughObjectiveLens(float Cs, float deltaf, float alpha_ma
 			}
 		}
 	
-	writeToFile("H0_re.txt", H0_re);
-	writeToFile("H0_im.txt", H0_im);
+	// writeToFile("H0_re.txt", H0_re);
+	// writeToFile("H0_im.txt", H0_im);
 
 	// pass through objective lens
 	irad2FFT2(this->psi_re, this->psi_im);
