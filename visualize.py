@@ -42,7 +42,7 @@ def bw_limit(x):
 
 psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
 H0 = importdata('H0_re.txt') + 1j*importdata('H0_im.txt')
-psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
+# psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
 # psi = np.abs(psi)**2
 print(np.min(np.abs(psi)**2), np.max(np.abs(psi)**2))
 plt.imshow(np.abs(psi)**2,'gray')
