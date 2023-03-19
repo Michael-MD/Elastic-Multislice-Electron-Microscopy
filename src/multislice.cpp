@@ -169,8 +169,9 @@ float multislice::intensity()
 	calculates intensity of psi_re, psi_im
 	*/
 	float I = 0;
+	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
 	for(int i = 0; i < this->px; i++)
 		for(int j = 0; j < this->py; j++)
-			I += pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2);
+			I += (pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2)) * this->D(kx[i], ky[j]);
 	return I;
 }
