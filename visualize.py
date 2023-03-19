@@ -62,13 +62,32 @@ def lens_tf():
     H0 = (np.cos(-chi) - 1j*np.sin(chi))* A
     return H0
 
-
 dim=512
-psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
-H0 = importdata('H0_re.txt') + 1j*importdata('H0_im.txt')
-# H0 = lens_tf()
-# psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
-psi = np.abs(psi)**2
+psi = importdata('probe_re.txt') + 1j*importdata('probe_im.txt')
+
+# plt.imshow(np.real(psi))
+# plt.show()
+
+psi = psi[int(dim/2),:]
+psire_line = (np.imag(psi))
+r = np.linspace(0,50,dim)
+plt.title('Fig. 5.13 of Kirkland')
+plt.plot(r,(psire_line))
+plt.ylabel('probe wavefunction')
+plt.xlabel('position x (in Ang.)')
+# plt.ylim([-.4,1])
+# plt.savefig('Fig 5.13.jpg')
+plt.show()
+
+
+
+
+# dim=512
+# psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
+# H0 = importdata('H0_re.txt') + 1j*importdata('H0_im.txt')
+# # H0 = lens_tf()
+# # psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
+# psi = np.abs(psi)**2
 
 # plt.imshow(np.real(psi),'gray')
 # plt.colorbar()
