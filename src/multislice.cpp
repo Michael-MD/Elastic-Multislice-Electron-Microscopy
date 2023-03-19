@@ -94,6 +94,14 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	}
 
 	this->layers = layers;
+
+
+	// initilize wave function
+	vector<vector<float>> psi_re(this->px);
+	for(auto &psii : psi_re)
+		psii = vector<float>(this->py);
+	this->psi_re = psi_re;
+	this->psi_im = psi_re;
 }
 
 

@@ -20,13 +20,10 @@ void CTEM::calcPsi0()
 	/*
 	Creates initial wave function with unity real component and zero imaginary component
 	*/
-	vector<vector<float>> psi_re(this->px);
-	for(auto &psii : psi_re)
-		psii = vector<float>(this->py, 1);
-	this->psi_re = psi_re;
-
-	vector<vector<float>> psi_im(this->px);
-	for(auto &psii : psi_im)
-		psii = vector<float>(this->py, 0);
-	this->psi_im = psi_im;
+	for(long unsigned i = 0; i < this->psi_re.size(); i++)
+		for(long unsigned j = 0; j < this->psi_re[0].size(); j++)
+		{
+			this->psi_re[i][j] = 1;
+			this->psi_im[i][j] = 0;
+		}
 }
