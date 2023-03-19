@@ -16,7 +16,6 @@ class multislice
 	*/
 public:
 	multislice(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s);
-	virtual void calcPsi0() = 0;
 	bool D(float kx, float ky) {return true;}; // detector
 	void propagateWaveFunctionThroughCrystal();
 	void calcLensTF(float Cs, float deltaf, float alpha_max);

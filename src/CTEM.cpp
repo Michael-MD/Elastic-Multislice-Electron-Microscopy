@@ -11,7 +11,7 @@ CTEM::CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vec
 			float Cs, float deltaf, float alpha_max)
 	: multislice(E, px, py, tx, ty, tz, filename, s)
 {
-	this->calcPsi0();
+	this->calcPlaneWave();
 	this->propagateWaveFunctionThroughCrystal();
 	this->calcLensTF(Cs, deltaf, alpha_max);
 
@@ -22,7 +22,7 @@ CTEM::CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vec
 };
 
 
-void CTEM::calcPsi0()
+void CTEM::calcPlaneWave()
 {
 	/*
 	Creates initial wave function with unity real component and zero imaginary component
