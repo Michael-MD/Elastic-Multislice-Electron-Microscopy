@@ -38,14 +38,16 @@ STEM::STEM(float E, int px, int py, int tx, int ty, int tz, string filename, vec
 
 	// create image
 	for(int i = 0; i < this->px; i++)
+	{
+		cout << i << endl;
 		for(int j = 0; j < this->py; j++)
 		{
 			this->calcProbe(rx_p[i], ry_p[j]);
 			this->propagateWaveFunctionThroughCrystal();
 			irad2FFT2(this->psi_re, this->psi_im);	// diffraction pattern in far-field
 			I[i][j] = this->totalIntensity();
-			cout << i << ' ' << j << '\n';
 		}
+	}
 	this->I = I;
 };
 
