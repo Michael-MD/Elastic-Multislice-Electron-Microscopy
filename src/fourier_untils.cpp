@@ -94,12 +94,15 @@ void handamardProduct(vector<vector<float>> &A_re, vector<vector<float>> &A_im, 
 	Note: To save time, this function doesn't check the dimensions.
 	*/
 	int px = A_re.size(), py = A_re[0].size();
+	float tmp_re, tmp_im;
 	for(int i = 0; i < px; i++)
 		for(int j = 0; j < py; j++)
 		{
-			complex_mult(	A_re[i][j], A_im[i][j],
+			complex_mult(	tmp_re, tmp_im,
 							A_re[i][j], A_im[i][j],
 							B_re[i][j], B_im[i][j] );
+			A_re[i][j] = tmp_re;
+			A_im[i][j] = tmp_im;
 		}
 }
 
@@ -109,7 +112,6 @@ void addMatrix(vector<vector<float>> &A_re, vector<vector<float>> &A_im, vector<
 	for(int i = 0; i < px; i++)
 		for(int j = 0; j < py; j++)
 		{
-
 			A_re[i][j] = A_re[i][j] + B_re[i][j];
 			A_im[i][j] = A_im[i][j] + B_im[i][j];
 		}

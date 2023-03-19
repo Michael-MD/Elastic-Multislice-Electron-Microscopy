@@ -40,54 +40,76 @@ def bw_limit(x):
     return x
 
 
+def lens_tf():
+    s1,s2 = 512,512
+    kx = np.fft.fftfreq(s1, 1/(dim/50))
+    ky = np.fft.fftfreq(s2, 1/(dim/50))
+    kx, ky = np.meshgrid(kx, ky)
+    k2 = kx**2 + ky**2
+
+    alphamax = 10.37 * 1e-3 # rad
+    deltaf =  700 # Ang
+    Cs = 1.3 * 1e7    # Ang
+
+
+    lam = 1/39.87345849884623
+    gamma = 1.39139023969897
+
+    A = np.zeros(psi.shape)
+    mask = lam * np.sqrt(k2) < alphamax
+    A[mask] = 1
+    chi = np.pi * lam * k2 * (.5 * Cs * lam**2 * k2 - deltaf)
+    H0 = (np.cos(-chi) - 1j*np.sin(chi))* A
+    return H0
+
+
+dim=512
 psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
 H0 = importdata('H0_re.txt') + 1j*importdata('H0_im.txt')
+# H0 = lens_tf()
 # psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
-# psi = np.abs(psi)**2
-print(np.min(np.abs(psi)**2), np.max(np.abs(psi)**2))
-plt.imshow(np.abs(psi)**2,'gray')
-plt.colorbar()
-plt.show()
-chi =importdata('chi.txt') 
+psi = np.abs(psi)**2
 
-dim = 512
-
-
-# ****pass through lens****
-s1,s2 = psi.shape
-kx = np.fft.fftfreq(s1, 1/(dim/50))
-ky = np.fft.fftfreq(s2, 1/(dim/50))
-print(max(kx), max(ky))
-kx, ky = np.meshgrid(kx, ky)
-k2 = kx**2 + ky**2
-
-alphamax = 10.37 * 1e-3 # rad
-deltaf =  700 # Ang
-Cs = 1.3 * 1e7    # Ang
-
-
-lam = 1/39.87345849884623
-gamma = 1.39139023969897
-
-A = np.zeros(psi.shape)
-mask = lam * np.sqrt(k2) < alphamax
-A[mask] = 1
-# chi = np.pi * lam * k2 * (.5 * Cs * lam**2 * k2 - deltaf)
-# H0 = (np.cos(-chi) - 1j*np.sin(chi))* A
-
-
-psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
-print(np.min(np.abs(psi)**2), np.max(np.abs(psi)**2))
-print(sum(sum(intensity:=np.abs(psi)**2)/(dim**2)))
-plt.imshow(intensity, 'gray')
-plt.colorbar()
-plt.show()
-
-
-
-# plt.imshow(np.real(np.fft.fftshift(H0)).astype(float),'gray')
+# plt.imshow(np.real(psi),'gray')
 # plt.colorbar()
 # plt.show()
+
+# psi = psi[int(dim/2),:]
+# psire_line = (np.real(psi))
+# r = np.linspace(0,50,dim)
+# plt.title('Fig. 5.13 of Kirkland')
+# plt.plot(r,(psire_line))
+# plt.ylabel('Intensity')
+# plt.xlabel('position x (in Ang.)')
+# plt.ylim([.5,1.1])
+# # plt.savefig('Fig 5.13.jpg')
+# plt.show()
+
+
+# psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
+# H0 = importdata('H0_re.txt') + 1j*importdata('H0_im.txt')
+# # psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
+# # psi = np.abs(psi)**2
+# print(np.min(np.abs(psi)**2), np.max(np.abs(psi)**2))
+# plt.imshow(np.abs(psi)**2,'gray')
+# plt.colorbar()
+# plt.show()
+# chi =importdata('chi.txt') 
+
+# dim = 512
+
+
+
+
+# psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
+# print(np.min(np.abs(psi)**2), np.max(np.abs(psi)**2))
+# print(sum(sum(intensity:=np.abs(psi)**2)/(dim**2)))
+# plt.imshow(intensity, 'gray')
+# plt.colorbar()
+# plt.show()
+
+
+
 
 # # fig 5.12
 # intensity = np.abs(psi)**2
