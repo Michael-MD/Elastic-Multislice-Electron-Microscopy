@@ -19,6 +19,7 @@ public:
 	virtual void calcPsi0() = 0;
 	void propagateWaveFunctionThroughCrystal();
 	void calcLensTF(float Cs, float deltaf, float alpha_max);
+	float intensity();
 
 public:
 	int tx, ty, tz;					// unitcell tiling

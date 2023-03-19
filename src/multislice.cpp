@@ -161,3 +161,16 @@ void multislice::calcLensTF(float Cs, float deltaf, float alpha_max)
 	this->H0_re = H0_re;
 	this->H0_im = H0_im;
 }
+
+
+float multislice::intensity()
+{
+	/*
+	calculates intensity of psi_re, psi_im
+	*/
+	float I = 0;
+	for(int i = 0; i < this->px; i++)
+		for(int j = 0; j < this->py; j++)
+			I += pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2);
+	return I;
+}
