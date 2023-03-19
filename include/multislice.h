@@ -20,7 +20,7 @@ public:
 	bool D(float kx, float ky) {return true;}; // detector
 	void propagateWaveFunctionThroughCrystal();
 	void calcLensTF(float Cs, float deltaf, float alpha_max);
-	float intensity();
+	float totalIntensity();
 
 public:
 	int tx, ty, tz;					// unitcell tiling

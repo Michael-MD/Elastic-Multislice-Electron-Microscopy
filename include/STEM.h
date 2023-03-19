@@ -16,6 +16,7 @@ public:
 	void calcPsi0() override {};
 public:
 	float Cs, deltaf, alpha_max;	// probe forming lens properties
+	vector<vector<float>> I;
 };
 
 #endif

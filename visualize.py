@@ -40,44 +40,94 @@ def bw_limit(x):
     return x
 
 
+I = importdata('I.txt')
+print(I)
+plt.imshow(I)
+plt.show()
+
+
+
+"""
+dim=1024
 def lens_tf():
-    s1,s2 = 512,512
-    kx = np.fft.fftfreq(s1, 1/(dim/50))
-    ky = np.fft.fftfreq(s2, 1/(dim/50))
+    s1,s2 = dim,dim
+    kx = np.fft.fftfreq(s1, 1/(dim/20))
+    ky = np.fft.fftfreq(s2, 1/(dim/20))
     kx, ky = np.meshgrid(kx, ky)
     k2 = kx**2 + ky**2
 
-    alphamax = 10.37 * 1e-3 # rad
-    deltaf =  700 # Ang
+    alphamax = 8.88 * 1e-3 # rad
+    deltaf =  497 # Ang
     Cs = 1.3 * 1e7    # Ang
 
 
     lam = 1/39.87345849884623
     gamma = 1.39139023969897
 
-    A = np.zeros(psi.shape)
+    A = np.zeros([s1,s2])
     mask = lam * np.sqrt(k2) < alphamax
     A[mask] = 1
     chi = np.pi * lam * k2 * (.5 * Cs * lam**2 * k2 - deltaf)
-    H0 = (np.cos(-chi) - 1j*np.sin(chi))* A
-    return H0
+    H0 = np.exp(-1j*chi)* A
+    return kx,ky,H0
 
-dim=512
-psi = importdata('probe_re.txt') + 1j*importdata('probe_im.txt')
+kx,ky,H0 = lens_tf()
+rx_p = 0
+ry_p = 0
+psi = H0 * np.exp(1j * 2 *np.pi * (kx * rx_p + ky * ry_p))
+psi = np.fft.fft2(psi / np.sum(np.abs(psi)**2))
+psi = np.fft.fftshift(psi)
 
-# plt.imshow(np.real(psi))
+
+
+# plt.imshow(np.abs(psi)**2)
 # plt.show()
 
+
+
+# psi = importdata('probe_re.txt') + 1j*importdata('probe_im.txt')
+I = np.abs(psi)**2
+
 psi = psi[int(dim/2),:]
-psire_line = (np.imag(psi))
-r = np.linspace(0,50,dim)
-plt.title('Fig. 5.13 of Kirkland')
-plt.plot(r,(psire_line))
+r = np.linspace(-10,10,dim)
+plt.title('Fig. 5.20 of Kirkland')
+
+plt.subplot(2,1,1)
+psire_line = (np.real(psi))
+plt.plot(r,(psire_line),'k')
+
+psiim_line = (np.imag(psi))
+plt.plot(r,psiim_line, 'k--')
+plt.ylabel('probe wavefunction')
+plt.ylim([-.4,1])
+plt.title('Fig 5.20 of Kirkland')
+
+plt.subplot(2,1,2)
+psire_line = (np.abs(psi))
+plt.plot(r,(psire_line),'k')
+
+psiim_line = (np.angle(psi)  )
+# psiim_line += np.pi * 2
+# psiim_line %= np.pi * 2
+psiim_line /= np.pi * 2
+plt.plot(r,psiim_line, 'k--')
+plt.ylim([-.4,1])
+
 plt.ylabel('probe wavefunction')
 plt.xlabel('position x (in Ang.)')
-# plt.ylim([-.4,1])
-# plt.savefig('Fig 5.13.jpg')
+
+
 plt.show()
+"""
+
+
+
+
+
+
+
+
+
 
 
 

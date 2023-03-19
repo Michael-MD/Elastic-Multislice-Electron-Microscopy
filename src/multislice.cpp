@@ -163,10 +163,10 @@ void multislice::calcLensTF(float Cs, float deltaf, float alpha_max)
 }
 
 
-float multislice::intensity()
+float multislice::totalIntensity()
 {
 	/*
-	calculates intensity of psi_re, psi_im
+	calculates total intensity of psi_re, psi_im
 	*/
 	float I = 0;
 	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
