@@ -1,5 +1,7 @@
 #include "CTEM.h"
 #include "multislice.h"
+#include "fft.h"
+#include "fourier_utils.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -11,7 +13,12 @@ CTEM::CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vec
 {
 	this->calcPsi0();
 	this->propagateWaveFunctionThroughCrystal();
-	this->passThroughObjectiveLens(Cs, deltaf, alpha_max);
+	this->calcLensTF(Cs, deltaf, alpha_max);
+
+	// pass through objective lens
+	irad2FFT2(this->psi_re, this->psi_im);
+	handamardProduct(this->psi_re, this->psi_im, H0_re, H0_im);
+	rad2FFT2(this->psi_re, this->psi_im);
 };
 
 

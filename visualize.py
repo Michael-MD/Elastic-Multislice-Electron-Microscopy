@@ -70,9 +70,9 @@ H0 = importdata('H0_re.txt') + 1j*importdata('H0_im.txt')
 # psi = np.fft.fft2( np.fft.ifft2(psi) * H0 )
 psi = np.abs(psi)**2
 
-plt.imshow(np.real(psi),'gray')
-plt.colorbar()
-plt.show()
+# plt.imshow(np.real(psi),'gray')
+# plt.colorbar()
+# plt.show()
 
 # psi = psi[int(dim/2),:]
 # psire_line = (np.real(psi))

@@ -18,7 +18,7 @@ public:
 	multislice(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s);
 	virtual void calcPsi0() = 0;
 	void propagateWaveFunctionThroughCrystal();
-	void passThroughObjectiveLens(float Cs, float deltaf, float alpha_max);
+	void calcLensTF(float Cs, float deltaf, float alpha_max);
 
 public:
 	int tx, ty, tz;					// unitcell tiling
@@ -27,6 +27,7 @@ public:
 	float E;
 	vector<layer> layers;	// contains vector of atoms in each layer of crystal
 	vector<vector<float>> psi_re, psi_im; // wave function
+	vector<vector<float>> H0_re, H0_im; // Lens TF
 };
 
 #endif

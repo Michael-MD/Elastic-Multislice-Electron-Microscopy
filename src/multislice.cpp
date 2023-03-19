@@ -118,7 +118,7 @@ void multislice::propagateWaveFunctionThroughCrystal()
 }
 
 
-void multislice::passThroughObjectiveLens(float Cs, float deltaf, float alpha_max)
+void multislice::calcLensTF(float Cs, float deltaf, float alpha_max)
 {
 	/*
 	implements objective lens frequency response in back-focal plane. No need for bandwidth
@@ -158,8 +158,6 @@ void multislice::passThroughObjectiveLens(float Cs, float deltaf, float alpha_ma
 			}
 		}
 
-	// pass through objective lens
-	irad2FFT2(this->psi_re, this->psi_im);
-	handamardProduct(this->psi_re, this->psi_im, H0_re, H0_im);
-	rad2FFT2(this->psi_re, this->psi_im);
+	this->H0_re = H0_re;
+	this->H0_im = H0_im;
 }
