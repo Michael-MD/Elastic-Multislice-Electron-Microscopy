@@ -16,7 +16,7 @@ class multislice
 	*/
 public:
 	multislice(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s);
-	bool D(float kx, float ky) {return true;}; // detector
+	virtual float D(float kx, float ky) = 0; // detector
 	void propagateWaveFunctionThroughCrystal();
 	void calcLensTF(float Cs, float deltaf, float alpha_max);
 	float totalIntensity();
@@ -25,7 +25,7 @@ public:
 	int tx, ty, tz;					// unitcell tiling
 	int px_u, py_u, px, py;					// unitcell grid pixel dimensions
 	float rx_u, ry_u, rx, ry;		// total real space dimensions and of unit cell
-	float E;
+	float E, lambda;
 	vector<layer> layers;	// contains vector of atoms in each layer of crystal
 	vector<vector<float>> psi_re, psi_im; // wave function
 	vector<vector<float>> H0_re, H0_im; // Lens TF

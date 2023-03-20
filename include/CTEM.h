@@ -13,6 +13,7 @@ public:
 	CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
 		float Cs, float deltaf, float alpha_max);
 	void calcPlaneWave();
+	float D(float kx, float ky) override { return 1; };
 };
 
 #endif

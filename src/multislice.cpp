@@ -24,6 +24,7 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	*/
 	
 	this->E = E;
+	this->lambda = relativistic_wavelength(this->E);
 
 	this->px_u = px / tx;
 	this->py_u = py / ty;
