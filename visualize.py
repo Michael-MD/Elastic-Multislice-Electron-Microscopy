@@ -39,12 +39,18 @@ def bw_limit(x):
     x = np.fft.ifft2(x)
     return x
 
+def linescan(x):
+    a,_ = x.shape
+    return x[int(a/2),:]
 
 I = importdata('I.txt')
-print(I)
-plt.imshow(I)
-plt.show()
+# plt.imshow(I,'gray')
+# plt.colorbar()
+# plt.show()
 
+Iline = linescan(I)
+plt.plot(Iline)
+plt.show()
 
 
 """

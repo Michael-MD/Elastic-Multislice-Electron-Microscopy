@@ -10,7 +10,7 @@
 using namespace std;
 
 
-STEM::STEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
+STEM::STEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, string filename, vector<float> &s,
 			float Cs, float deltaf, float alpha_max)
 	: multislice(E, px, py, tx, ty, tz, filename, s)
 {
@@ -22,25 +22,28 @@ STEM::STEM(float E, int px, int py, int tx, int ty, int tz, string filename, vec
 	this->deltaf = deltaf;
 	this->alpha_max = alpha_max;
 
+	this->px_p = px_p;
+	this->py_p = py_p;
+
 	// initilize intensity and Img arrays
-	vector<vector<float>> I(this->px);
+	vector<vector<float>> I(this->px_p);
 	for(auto &Ii : I)
-		Ii = vector<float>(this->py);
+		Ii = vector<float>(this->py_p);
 
 	// make list of probe positions
-	vector<float> rx_p(this->px);
-	for(int i = 0; i < this->px; i++)
-		rx_p[i] = this->rx * i / this->px;
+	vector<float> rx_p(this->px_p);
+	for(int i = 0; i < this->px_p; i++)
+		rx_p[i] = this->rx * i / this->px_p;
 	
-	vector<float> ry_p(this->py);
-	for(int i = 0; i < this->py; i++)
-		ry_p[i] = this->ry * i / this->py;
+	vector<float> ry_p(this->py_p);
+	for(int i = 0; i < this->py_p; i++)
+		ry_p[i] = this->ry * i / this->py_p;
 
 	// create image
-	for(int i = 0; i < this->px; i++)
+	for(int i = 0; i < this->px_p; i++)
 	{
-		cout << i << endl;
-		for(int j = 0; j < this->py; j++)
+		cout << '\n' << i << ' ';
+		for(int j = 0; j < this->py_p; j++)
 		{
 			this->calcProbe(rx_p[i], ry_p[j]);
 			this->propagateWaveFunctionThroughCrystal();
