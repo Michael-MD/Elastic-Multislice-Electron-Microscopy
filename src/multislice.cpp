@@ -74,7 +74,9 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 
 
 	// arrange atoms in layers, currently all placed in one layer
-	int ns = s.size() + 1;
+	int ns;
+	if(s.size() == 1 && s[0] == 1) ns = s.size();
+	else ns = s.size() + 1;
 
 	vector<layer> layers(ns, layer(E, px_u, py_u, this->rx_u, this->ry_u, this->tx, this->ty, c.z()));
 	for(int i = 0; i < ns; i++)
