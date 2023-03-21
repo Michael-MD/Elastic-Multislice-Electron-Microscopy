@@ -22,6 +22,8 @@ STEM::STEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, 
 	this->deltaf = deltaf;
 	this->alpha_max = alpha_max;
 
+	calcLensTF(this->Cs, this->deltaf, this->alpha_max);
+
 	this->px_p = px_p;
 	this->py_p = py_p;
 
@@ -29,6 +31,7 @@ STEM::STEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, 
 	vector<vector<float>> I(this->px_p);
 	for(auto &Ii : I)
 		Ii = vector<float>(this->py_p);
+	this->I = I;
 
 	// make list of probe positions
 	vector<float> rx_p(this->px_p);
@@ -39,19 +42,8 @@ STEM::STEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, 
 	for(int i = 0; i < this->py_p; i++)
 		ry_p[i] = this->ry * i / this->py_p;
 
-	// create image
-	for(int i = 0; i < this->px_p; i++)
-	{
-		cout << '\n' << i << ' ';
-		for(int j = 0; j < this->py_p; j++)
-		{
-			this->calcProbe(rx_p[i], ry_p[j]);
-			this->propagateWaveFunctionThroughCrystal();
-			irad2FFT2(this->psi_re, this->psi_im);	// diffraction pattern in far-field
-			I[i][j] = this->totalIntensity();
-		}
-	}
-	this->I = I;
+	this->rx_p = rx_p;
+	this->ry_p = ry_p;
 };
 
 
@@ -60,7 +52,6 @@ void STEM::calcProbe(float rx_p, float ry_p)
 	/*
 	Calculates probe wave function at position rx, ry and places result in probe_re, probe_im.
 	*/
-	calcLensTF(this->Cs, this->deltaf, this->alpha_max);
 	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
 
 	float arg;
@@ -72,8 +63,8 @@ void STEM::calcProbe(float rx_p, float ry_p)
 			this->psi_im[i][j] = sin(arg);
 		}
 
+	// cout << this->totalIntensity();
 	handamardProduct(this->psi_re, this->psi_im, this->H0_re, this->H0_im);
-
 
 	/*
 	Finds normalization constant using plancherell theorem which states the intensity in real and

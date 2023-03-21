@@ -36,7 +36,6 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	this->ty = ty;
 	this->tz = tz;
 
-	// ****** currently assumes all atoms on single layer ******
 	crystal c(this->px_u, this->py_u, filename);
 	this->rx_u = c.x();
 	this->ry_u = c.y();
@@ -75,7 +74,8 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 
 
 	// arrange atoms in layers, currently all placed in one layer
-	int ns = s.size() + 1;
+	int ns = s.size();
+	if(ns > 1) ns++;
 
 	vector<layer> layers(ns, layer(E, px_u, py_u, this->rx_u, this->ry_u, this->tx, this->ty, c.z()));
 	for(int i = 0; i < ns; i++)
@@ -114,7 +114,7 @@ void multislice::propagateWaveFunctionThroughCrystal()
 			handamardProduct(this->psi_re, this->psi_im, layer.t_re, layer.t_im);
 			irad2FFT2(this->psi_re, this->psi_im);
 			handamardProduct(this->psi_re, this->psi_im, layer.P_re, layer.P_im);
-			rad2FFT2(this->psi_re, this->psi_im);
+			// rad2FFT2(this->psi_re, this->psi_im);
 		}
 }
 
@@ -169,10 +169,15 @@ float multislice::totalIntensity()
 	/*
 	calculates total intensity of psi_re, psi_im
 	*/
-	float I = 0;
+	float intensity = 0;
 	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
 	for(int i = 0; i < this->px; i++)
+	{
 		for(int j = 0; j < this->py; j++)
-			I += (pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2)) * this->D(kx[i], ky[j]);
-	return I;
+		{
+			// cout << this->D(kx[i], ky[j]);
+			intensity += (pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2)) * this->D(kx[i], ky[j]);
+		}
+	}
+	return intensity;
 }

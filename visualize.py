@@ -44,9 +44,9 @@ def linescan(x):
     return x[int(a/2),:]
 
 I = importdata('I.txt')
-# plt.imshow(I,'gray')
-# plt.colorbar()
-# plt.show()
+plt.imshow(I,'gray')
+plt.colorbar()
+plt.show()
 
 Iline = linescan(I)
 plt.plot(Iline)

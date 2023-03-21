@@ -103,7 +103,6 @@ void layer::calcFreeSpacePropagator()
 		for(int j = 0; j < this->py; j++)
 		{
 			phi = c * (pow(kx[i],2) + pow(ky[j],2));
-			// cout << this->rx;
 			P_re[i][j] = cos(phi);
 			P_im[i][j] = sin(phi);
 		}
@@ -111,5 +110,4 @@ void layer::calcFreeSpacePropagator()
 	bandwidthLimit(this->rx, this->ry, P_re, P_im);
 	this->P_re = P_re;
 	this->P_im = P_im;
-
 }
