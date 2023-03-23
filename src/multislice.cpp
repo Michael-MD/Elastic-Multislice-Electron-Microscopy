@@ -177,3 +177,19 @@ float multislice::totalIntensity()
 			I += (pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2)) * this->D(kx[i], ky[j]);
 	return I;
 }
+
+
+void multislice::calcIntensity()
+{
+	/*
+	calculates total intensity of psi_re, psi_im
+	*/
+	vector<vector<float>> I(this->px);
+	for(auto &Ii : I)
+		Ii = vector<float>(this->py);
+
+	for(int i = 0; i < this->px; i++)
+		for(int j = 0; j < this->py; j++)
+			I[i][j] = pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2);
+	this->I = I;
+}

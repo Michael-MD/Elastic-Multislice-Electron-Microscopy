@@ -43,14 +43,71 @@ def linescan(x):
     a,_ = x.shape
     return x[int(a/2),:]
 
-I = importdata('I.txt')
+
+
+
+
+
+
+# # ________________figure 5.13________________-
+# I = importdata('I.txt')
+# Iline = linescan(I)
+# r = np.linspace(0,50,I.shape[0])
+# plt.plot(r,Iline)
+# plt.ylim([.5,1.1])
+# plt.xlabel('position x (in Ang)')
+# plt.ylabel('I, age intensity')
+# plt.show()
+
+
+# # ________________figure 5.12________________-
+# I = importdata('I.txt')
 # plt.imshow(I,'gray')
 # plt.colorbar()
 # plt.show()
 
-Iline = linescan(I)
-plt.plot(Iline)
-plt.show()
+
+
+
+# # ________________figure 5.11________________-
+# t = importdata('t_re.txt') + 1j*importdata('t_im.txt')
+# tline = linescan(t)
+
+# r = np.linspace(0, 50, t.shape[0])
+# plt.subplot(2,1,1)
+# plt.plot(r,np.real(tline))
+
+# plt.subplot(2,1,2)
+# plt.plot(r,np.imag(tline))
+# plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# I = importdata('I.txt')
+# # plt.imshow(I,'gray')
+# # plt.colorbar()
+# # plt.show()
+
+# Iline = linescan(I)
+# plt.plot(Iline)
+# plt.show()
 
 
 """

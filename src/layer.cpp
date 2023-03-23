@@ -75,6 +75,9 @@ void layer::calcTransmissionFunction()
 
 	tile(this->t_re, this->t_im, t_re_u, t_im_u, this->tx, this->ty);
 	bandwidthLimit(this->rx, this->ry, this->t_re, this->t_im);	// kirkland makes mistake here in Fig 5.11
+	
+	// writeToFile("t_re.txt", this->t_re);
+	// writeToFile("t_im.txt", this->t_im);
 }
 
 
