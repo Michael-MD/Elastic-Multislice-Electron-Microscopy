@@ -47,6 +47,12 @@ def linescan(x):
 
 
 
+# psi = importdata('probe_re.txt') + 1j*importdata('probe_im.txt')
+# psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
+I = importdata('I.txt')
+plt.imshow(I,'gray')
+# plt.imshow(np.fft.fftshift(np.real(psi)),'gray')
+plt.show()
 
 
 # # ________________figure 5.13________________-
@@ -65,9 +71,6 @@ def linescan(x):
 # plt.imshow(I,'gray')
 # plt.colorbar()
 # plt.show()
-
-
-
 
 # # ________________figure 5.11________________-
 # t = importdata('t_re.txt') + 1j*importdata('t_im.txt')

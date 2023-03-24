@@ -10,6 +10,7 @@
 #include <string>
 #include <fstream>
 #include <tuple>
+#include <vector>
 
 #include <iostream>
 using namespace std;
@@ -24,6 +25,7 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	*/
 	
 	this->E = E;
+	this->lambda = relativistic_wavelength(this->E);
 
 	this->px_u = px / tx;
 	this->py_u = py / ty;
@@ -104,7 +106,7 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 		psii = vector<float>(this->py);
 	this->psi_re = psi_re;
 	this->psi_im = psi_re;
-}
+};
 
 
 void multislice::propagateWaveFunctionThroughCrystal()
@@ -117,7 +119,7 @@ void multislice::propagateWaveFunctionThroughCrystal()
 			handamardProduct(this->psi_re, this->psi_im, layer.P_re, layer.P_im);
 			rad2FFT2(this->psi_re, this->psi_im);
 		}
-}
+};
 
 
 void multislice::calcLensTF(float Cs, float deltaf, float alpha_max)
@@ -162,7 +164,7 @@ void multislice::calcLensTF(float Cs, float deltaf, float alpha_max)
 
 	this->H0_re = H0_re;
 	this->H0_im = H0_im;
-}
+};
 
 
 float multislice::totalIntensity()
@@ -170,26 +172,19 @@ float multislice::totalIntensity()
 	/*
 	calculates total intensity of psi_re, psi_im
 	*/
-	float I = 0;
+	float tot = 0;
 	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
+	// writeToFile("probe_re.txt", this->psi_re);
+	// 		writeToFile("probe_im.txt", this->psi_im);
+	// 		char s;
+	// 		cout << 'b' << endl;
+	// 		cin >> s;
 	for(int i = 0; i < this->px; i++)
-		for(int j = 0; j < this->py; j++)
-			I += (pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2)) * this->D(kx[i], ky[j]);
-	return I;
-}
+		for(int j = 0; j < this->py; j++) 
+		{
+			tot += (pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2)) * this->D(kx[i], ky[j]);
+		}
+	return tot;
+};
 
 
-void multislice::calcIntensity()
-{
-	/*
-	calculates total intensity of psi_re, psi_im
-	*/
-	vector<vector<float>> I(this->px);
-	for(auto &Ii : I)
-		Ii = vector<float>(this->py);
-
-	for(int i = 0; i < this->px; i++)
-		for(int j = 0; j < this->py; j++)
-			I[i][j] = pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2);
-	this->I = I;
-}
