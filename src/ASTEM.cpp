@@ -1,4 +1,3 @@
-
 #include "ASTEM.h"
 #include "fft.h"
 #include "general_purpose_utils.h"
@@ -7,6 +6,9 @@ ASTEM::ASTEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz
 		float Cs, float deltaf, float alpha_max, float alpha_min_D, float alpha_max_D)
 	: STEM(E, px, py, px_p, py_p, tx, ty, tz, filename, s, Cs, deltaf, alpha_max)
 {
+	/*
+	General class for STEM techniques involving annular detectors such as DPC, ADFSTEM, BFSTEM, ABFSTEM etc,
+	*/
 	this->alpha_min_D = alpha_min_D * 1e-3;
 	this->alpha_max_D = alpha_max_D * 1e-3;
 	this->k_min_D = this->alpha_min_D / this->lambda;
@@ -48,10 +50,3 @@ ASTEM::ASTEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz
 };
 
 
-float ASTEM::D(float kx, float ky)
-{
-	float k = sqrt( pow(kx,2)+pow(ky,2) );
-	if(k>=this->k_min_D && k<=this->k_max_D)
-		return 1;
-	return 0;
-};
