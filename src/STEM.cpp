@@ -56,7 +56,7 @@ STEM::STEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, 
 void STEM::calcProbe(float rx_p, float ry_p)
 {
 	/*
-	Calculates probe wave function at position rx, ry and places result in probe_re, probe_im.
+	Calculates probe wave function at position rx, ry and places result in psi_re, psi_im.
 	*/
 	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
 
@@ -92,13 +92,3 @@ void STEM::calcProbe(float rx_p, float ry_p)
 
 	rad2FFT2(this->psi_re, this->psi_im);
 };
-
-// void STEM::calcIntensity()
-// {
-// 	/*
-// 	calculates total intensity of psi_re, psi_im
-// 	*/
-// 	for(int i = 0; i < this->px; i++)
-// 		for(int j = 0; j < this->py; j++)
-// 			this->I[i][j] = sqrt(pow(this->psi_re[i][j],2) + pow(this->psi_im[i][j],2));
-// };
