@@ -19,7 +19,7 @@ public:
 	virtual float D(float kx, float ky) = 0; // detector
 	void propagateWaveFunctionThroughCrystal();
 	void calcLensTF(float Cs, float deltaf, float alpha_max);
-	float totalIntensity();
+	float totalIntensity(bool det = false);
 
 public:
 	int tx, ty, tz;					// unitcell tiling

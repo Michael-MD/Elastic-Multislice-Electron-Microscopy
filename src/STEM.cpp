@@ -47,6 +47,9 @@ STEM::STEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, 
 	for(auto &Ii : I)
 		Ii = vector<float>(this->py_p);
 	this->I = I;
+
+	this->px_p = px_p;
+	this->py_p = py_p;
 };
 
 

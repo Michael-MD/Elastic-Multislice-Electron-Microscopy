@@ -167,23 +167,26 @@ void multislice::calcLensTF(float Cs, float deltaf, float alpha_max)
 };
 
 
-float multislice::totalIntensity()
+float multislice::totalIntensity(bool det)
 {
 	/*
 	calculates total intensity of psi_re, psi_im
 	*/
 	float tot = 0;
-	auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
-	// writeToFile("probe_re.txt", this->psi_re);
-	// 		writeToFile("probe_im.txt", this->psi_im);
-	// 		char s;
-	// 		cout << 'b' << endl;
-	// 		cin >> s;
-	for(int i = 0; i < this->px; i++)
-		for(int j = 0; j < this->py; j++) 
-		{
-			tot += (pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2)) * this->D(kx[i], ky[j]);
-		}
+	if(det)
+	{
+		auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
+		for(int i = 0; i < this->px; i++)
+			for(int j = 0; j < this->py; j++) 
+				tot += (pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2)) * this->D(kx[i], ky[j]);	
+	}
+			
+	else
+	{
+		for(int i = 0; i < this->px; i++)
+			for(int j = 0; j < this->py; j++) 
+				tot += (pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2));
+	}
 	return tot;
 };
 

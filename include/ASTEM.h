@@ -14,7 +14,6 @@ public:
 		float Cs, float deltaf, float alpha_max, float alpha_min_D, float alpha_max_D);
 public:
 	float alpha_min_D, alpha_max_D, k_min_D, k_max_D;
-	float px_p, py_p;
 };
 
 #endif
