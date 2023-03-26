@@ -29,3 +29,11 @@ ASTEM::ASTEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz
 };
 
 
+float ASTEM::D(float kx, float ky)
+{
+	float k = sqrt( pow(kx,2)+pow(ky,2) );
+	if(k>=this->k_min_D && k<=this->k_max_D)
+		return 1;
+	return 0;
+};
+

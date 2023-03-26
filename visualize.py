@@ -52,9 +52,19 @@ def linescan(x):
 I = importdata('I.txt')
 plt.imshow(I,'gray')
 plt.colorbar()
-# plt.imshow(np.fft.fftshift(np.real(psi)),'gray')
+# plt.savefig('DPC CoM.jpg')
 plt.show()
 
+
+# # ________________DPC CoM________________-
+# I = importdata('I.txt')
+# plt.imshow(I,'gray')
+# plt.colorbar()
+# plt.title('DPC CoM in x-direction Intensity')
+# plt.ylabel('position x (in Ang)')
+# plt.xlabel('position y (in Ang)')
+# # plt.savefig('DPC CoM.jpg')
+# plt.show()
 
 # # ________________figure 5.13________________-
 # I = importdata('I.txt')
