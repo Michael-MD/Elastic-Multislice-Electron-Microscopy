@@ -7,7 +7,7 @@ ASTEM::ASTEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz
 	: STEM(E, px, py, px_p, py_p, tx, ty, tz, filename, s, Cs, deltaf, alpha_max)
 {
 	/*
-	General class for STEM techniques involving annular detectors such as DPC, ADFSTEM, BFSTEM, ABFSTEM etc,
+	General class for STEM techniques involving annular detectors such as ADFSTEM, BFSTEM, ABFSTEM etc,
 	*/
 	this->alpha_min_D = alpha_min_D * 1e-3;
 	this->alpha_max_D = alpha_max_D * 1e-3;
