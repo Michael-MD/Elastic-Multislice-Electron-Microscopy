@@ -47,13 +47,13 @@ def linescan(x):
 
 
 
-# psi = importdata('probe_re.txt') + 1j*importdata('probe_im.txt')
-# psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
-I = importdata('I.txt')
-plt.imshow(I,'gray')
-plt.colorbar()
-# plt.savefig('DPC CoM.jpg')
-plt.show()
+# # psi = importdata('probe_re.txt') + 1j*importdata('probe_im.txt')
+# # psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
+# I = importdata('I.txt')
+# plt.imshow(I,'gray')
+# plt.colorbar()
+
+# plt.show()
 
 
 # # ________________DPC CoM________________-
@@ -61,8 +61,8 @@ plt.show()
 # plt.imshow(I,'gray')
 # plt.colorbar()
 # plt.title('DPC CoM in x-direction Intensity')
-# plt.ylabel('position x (in Ang)')
-# plt.xlabel('position y (in Ang)')
+# plt.ylabel('position x (in pixels)')
+# plt.xlabel('position y (in pixels)')
 # # plt.savefig('DPC CoM.jpg')
 # plt.show()
 
