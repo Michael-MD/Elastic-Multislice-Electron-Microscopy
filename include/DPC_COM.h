@@ -13,7 +13,7 @@ public:
 		float Cs, float deltaf, float alpha_max, float CoM_dir);
 	float D(float kx, float ky) override;
 public:
-	int CoM;
+	int CoM_dir;
 };
 
 #endif

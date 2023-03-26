@@ -5,10 +5,10 @@
 using namespace std;
 
 DPC_COM::DPC_COM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
-		float Cs, float deltaf, float alpha_max, float CoM)
+		float Cs, float deltaf, float alpha_max, float CoM_dir)
 	: STEM(E, px, py, px_p, py_p, tx, ty, tz, filename, s, Cs, deltaf, alpha_max) 
 {
-	this->CoM = CoM;
+	this->CoM_dir = CoM_dir;
 
 	// create image
 	for(int i = 0; i < this->px_p; i++)
@@ -19,14 +19,14 @@ DPC_COM::DPC_COM(float E, int px_p, int py_p, int px, int py, int tx, int ty, in
 			this->calcProbe(rx_p[i], ry_p[j]);
 			this->propagateWaveFunctionThroughCrystal();
 			irad2FFT2(this->psi_re, this->psi_im);	// diffraction pattern in far-field
-			(this->I)[i][j] = this->totalIntensity(false);
+			(this->I)[i][j] = this->totalIntensity(true);
 		};
 	};
 };
 
 float DPC_COM::D(float kx, float ky)
 {
-	if(this->CoM == 0) return kx;
+	if(this->CoM_dir == 0) return kx;
 	return ky;
 };
 
