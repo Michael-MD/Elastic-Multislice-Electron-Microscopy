@@ -38,7 +38,7 @@ $$ e^{\mathcal Q \Delta z} = e^{(\mathcal T + \mathcal U) \Delta z} = e^{\mathca
 
 Now if $\mathcal U = 0$, then the angular spectrum formulation applies to our problem and we may identify the $e^{\mathcal T \Delta z}$ as  the free-space propagotor. So we may propagate the wave function through the specimen through repeted applicaiton of these operators until the wave function is at the exit of the specimen. Mathematically, this may be written as 
 
-$$ \psi(r_\perp, z) = \prod \mathcal F^{-1} \{ P(k_\perp, \Delta z) \mathcal F\{ e^{\mathcal U \Delta z} \psi(r_\perp, 0) \} \} $$
+$$ \psi(r_\perp, z) = \prod \mathcal F^{-1} ``{ P(k_\perp, \Delta z) \mathcal F``{ e^{\mathcal U \Delta z} \psi(r_\perp, 0) ``} ``} $$
 
 where $P(k_\perp, \Delta z)$ is the free-space propagator in reciprical space. The approach is referred to as the multislice approach and is the method used here.
 
@@ -48,7 +48,7 @@ a converged probe which scans across the specimenn surface.
 In STEM, for each probe position, a diffraction pattern is obtained, the detector which measures the intensity pattern 
 consitiues the various STEM techniques. The recorded signal at a given probe position is given by
 
-$$ g(k) = \int dk |I(k)|^2 D(k) $$
+$$ g(k) = \int ``, dk |I(k)|^2 D(k) $$
 
 where $D(k)$ is the detector geometry. For instance, ADFSTEM (Annular-Dark-Field STEM) collects electrons which scatter at high
 angles.
