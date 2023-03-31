@@ -14,6 +14,7 @@ corrected mass, wavelength and energy.
 Given a specimen with potential V(r), the Schrodinger equation reads
 
 $$  -\frac{\hbar^2}{2m} \nabla^2 \Psi - e V(r) \Psi = i\hbar \frac{\partial \Psi}{\partial t} $$
+
 where $m=\gamma m_0$. If we consider energy eigentates with a time-independent hamiltonian, then we obtain the Helmholtz equation
 
 $$ [\nambla^2 + 4 \pi k^2 + 4 \pi U ] \Psi = 0 $$
