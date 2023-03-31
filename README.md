@@ -11,5 +11,6 @@ Advanced computing in electron microscopy by Earl J. Kirkland which has become t
 In electron microscopy, information about the strucutre and constituants of a specimen is inferred by observing the scattering and diffraction of
 electrons. Although the incident electrons have energies on the order of 10keV-100keV, the Schrödinger equation is employed with a relativistically 
 corrected mass, wavelength and energy.
-Given a specimen with potential V(r), the schrodinger equation reads
+Given a specimen with potential V(r), the Schrodinger equation reads
+
 $$  -\frac{\hbar^2}{2m} \nabla^2 \Psi - e V(r) \Psi = i\hbar \frac{\partial \Psi}{\partial t} $$
