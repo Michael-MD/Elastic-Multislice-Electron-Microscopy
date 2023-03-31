@@ -40,4 +40,4 @@ Now if $\mathcal U = 0$, then the angular spectrum formulation applies to our pr
 
 $$ \psi(r_\perp, z) = \prod \mathcal F^{-1} \{ P(k_\perp, \Delta z) \mathcal F\{ e^{\mathcal U \Delta z} \psi(r_\perp, 0) \} \} $$
 
-where $P(k_\perp, Delta z)$ is the free-space propagator in reciprical space. The approach is referred to as the multislice approach and is the approach used here.
+where $P(k_\perp, \Delta z)$ is the free-space propagator in reciprical space. The approach is referred to as the multislice approach and is the approach used here.
