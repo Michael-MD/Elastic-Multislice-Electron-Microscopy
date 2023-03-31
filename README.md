@@ -29,7 +29,7 @@ $$ \psi(r_\perp, \Delta z) = e^{\mathcal{Q} z} \psi(r_\perp, 0)  $$
 
 where $\mathcal{Q} = \frac{i}{4\pi k} [\nabla_\perp^2 + 4\pi^2 U_c]$ if $\Delta z$ is small. Here 
 
-$$  U_c(r_\perp) = \int_0^{\Delta z} \, dz U(r_\perp,z) $$
+$$  U_c(r_\perp) = \int_0^{\Delta z} dz U(r_\perp,z) $$
 
 and is refered to as the projected potential.
 Since $\Delta z$ is taken to be small, 
@@ -48,9 +48,9 @@ a converged probe which scans across the specimenn surface.
 In STEM, for each probe position, a diffraction pattern is obtained, the detector which measures the intensity pattern 
 consitiues the various STEM techniques. The recorded signal at a given probe position is given by
 
-$$ g(k) = \int dk \, |I(k)|^2 D(k) $$
+$$ g(k) = \int dk |I(k)|^2 D(k) $$
 
-where D(k) is the detector geometry. For instance, ADFSTEM (Annular-Dark-Field STEM) collects electrons which scatter at high
+where $D(k)$ is the detector geometry. For instance, ADFSTEM (Annular-Dark-Field STEM) collects electrons which scatter at high
 angles.
 
 ## Usage
@@ -69,7 +69,7 @@ BFSTEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, stri
 CSTEM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, string filename, vector<float> &s,
 		float Cs, float deltaf, float alpha_max)
     
-CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
+HRTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
 			float Cs, float deltaf, float alpha_max)
       
 CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
