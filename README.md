@@ -81,7 +81,7 @@ E: <br>&emsp;Energy of input beam in eV <br>
 (px_p, py_p):<br>&emsp; Resolution of STEM scan positions i.e. the number of scan positions in each direction/
 (tx, ty, tz):<br>&emsp; Tiling of unit cell.<br>
 filename:<br>&emsp; File name of unit cell. Assumes files is located in directory strcutures/. Currently only .xyz files are supported.<br>
-s:<br>&emsp; Vector of slice locations in fractions of unit cell thickness. For instance, if a unit cell is 3.905 Ang. then s = {.2,.8} will result in slices at .2 `\times` 3.905 = 0.781, .8 `\times` 3.905 = 3.124.<br>
+s:<br>&emsp; Vector of slice locations in fractions of unit cell thickness. For instance, if a unit cell is 3.905 Ang. then s = {.2,.8} will result in slices at .2 $\times$ 3.905 = 0.781, .8 $\times$ 3.905 = 3.124.<br>
 Cs:<br>&emsp; Sperhical abberation of lens in [mm].<br>
 deltaf:<br>&emsp; Lens defocus in Ang.<br>
 alpha_max:<br>&emsp; Aperture opening angle in mrad.<br>
