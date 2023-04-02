@@ -69,8 +69,8 @@ def linescan(x):
 
 
 # psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
-# # psi_re = importdata('psi_re.txt')
-# # psi_im = importdata('psi_im.txt')
+# psi_re = importdata('psi_re.txt')
+# psi_im = importdata('psi_im.txt')
 # r = np.linspace(-10,10,psi_im.shape[0])
 
 # psi_re_line = linescan(psi_re)
@@ -90,25 +90,27 @@ def linescan(x):
 
 
 # # ________________DPC CoM________________-
-# I = importdata('I.txt')
-# plt.imshow(I,'gray')
-# plt.colorbar()
-# plt.title('DPC CoM in x-direction Intensity')
-# plt.ylabel('position x (in pixels)')
-# plt.xlabel('position y (in pixels)')
-# # plt.savefig('DPC CoM.jpg')
-# plt.show()
+I = importdata('I.txt')
+plt.imshow(I,'gray')
+plt.colorbar()
+plt.title('CoM in x-direction Intensity')
+plt.ylabel('position x (in pixels)')
+plt.xlabel('position y (in pixels)')
+plt.savefig('CoM.jpg')
+plt.show()
 
 # # ________________figure 5.13________________-
-I = importdata('I.txt')
-Iline = linescan(I)
-print(Iline)
-r = np.linspace(0,50,I.shape[0])
-plt.plot(r,Iline)
-# plt.ylim([.5,1.1])
-plt.xlabel('position x (in Ang)')
-plt.ylabel('I, age intensity')
-plt.show()
+# I = importdata('I.txt')
+# Iline = linescan(I)
+# print(Iline)
+# r = np.linspace(0,50,I.shape[0])
+# plt.plot(r,Iline)
+# # plt.ylim([.5,1.1])
+# plt.xlabel('position x (in Ang)')
+# plt.ylabel('ADF signal')
+# plt.title('figure 5.21 of kirkland')
+# plt.savefig('5.21.jpg')
+# plt.show()
 
 
 # # ________________figure 5.12________________-

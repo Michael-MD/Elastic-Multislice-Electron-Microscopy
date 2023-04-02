@@ -4,7 +4,7 @@
 #include "fft.h"
 using namespace std;
 
-CoM::CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
+CoM::CoM(float E, int px, int py, int px_p, int py_p, int tx, int ty, int tz, string filename, vector<float> &s,
 		float Cs, float deltaf, float alpha_max, bool CoM_dir_x)
 	: STEM(E, px, py, px_p, py_p, tx, ty, tz, filename, s, Cs, deltaf, alpha_max) 
 {
