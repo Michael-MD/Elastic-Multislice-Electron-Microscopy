@@ -45,14 +45,47 @@ def linescan(x):
 
 
 
+# N = 256
+# kx = np.fft.fftfreq(N, 20/N)
+# ky = np.fft.fftfreq(N, 20/N)
+# kx, ky = np.meshgrid(kx,ky)
+# k2 = kx**2 + ky**2
+# Cs = 1.3e7
+# deltaf = 497
+# alpha = 8.88e-3
+# # 0250793
+# lam = .0250785
+# x = 10
+# y=10
+
+# chi = np.pi * lam * k2 * (.5 * Cs * lam**2 * k2 - deltaf)
+# mask = np.sqrt(k2)*lam > alpha
+# psi = np.exp(-1j * chi+ 2 *np.pi * 1j * (kx * x + ky * y))
+# psi[mask] = 0
+# psi = np.fft.ifft2(psi)
+# psi /= np.sum(np.abs(psi)**2)
+# psi_re = np.real(psi)
+# psi_im = np.imag(psi)
 
 
-# # psi = importdata('probe_re.txt') + 1j*importdata('probe_im.txt')
-# # psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
-# I = importdata('I.txt')
-# plt.imshow(I,'gray')
-# plt.colorbar()
+# psi = importdata('psi_re.txt') + 1j*importdata('psi_im.txt')
+# # psi_re = importdata('psi_re.txt')
+# # psi_im = importdata('psi_im.txt')
+# r = np.linspace(-10,10,psi_im.shape[0])
 
+# psi_re_line = linescan(psi_re)
+# psi_im_line = linescan(psi_im)
+# plt.subplot(2,1,1)
+# plt.plot(r,psi_re_line, 'k-')
+# plt.plot(r,psi_im_line, 'k--')
+# plt.ylim([-.4,1])
+# plt.subplot(2,1,2)
+# psi_re_line = linescan(np.abs(psi))
+# psi_im_line = linescan(np.angle(psi)/np.pi/2)
+# plt.subplot(2,1,2)
+# plt.plot(r,psi_re_line, 'k-')
+# plt.plot(r,psi_im_line, 'k--')
+# # plt.ylim([-.4,1])
 # plt.show()
 
 
@@ -67,14 +100,15 @@ def linescan(x):
 # plt.show()
 
 # # ________________figure 5.13________________-
-# I = importdata('I.txt')
-# Iline = linescan(I)
-# r = np.linspace(0,50,I.shape[0])
-# plt.plot(r,Iline)
+I = importdata('I.txt')
+Iline = linescan(I)
+print(Iline)
+r = np.linspace(0,50,I.shape[0])
+plt.plot(r,Iline)
 # plt.ylim([.5,1.1])
-# plt.xlabel('position x (in Ang)')
-# plt.ylabel('I, age intensity')
-# plt.show()
+plt.xlabel('position x (in Ang)')
+plt.ylabel('I, age intensity')
+plt.show()
 
 
 # # ________________figure 5.12________________-

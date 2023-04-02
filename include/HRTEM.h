@@ -1,5 +1,5 @@
-#ifndef _CTEM
-#define _CTEM 1
+#ifndef _HRTEM
+#define _HRTEM 1
 
 #include <string>
 #include <vector>
@@ -7,10 +7,10 @@
 #include "multislice.h"
 using namespace std;
 
-class CTEM : public multislice
+class HRTEM : public multislice
 {
 public:
-	CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
+	HRTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
 		float Cs, float deltaf, float alpha_max);
 	float D(float kx, float ky) override { return 1; };
 	void calcPlaneWave();

@@ -1,4 +1,4 @@
-#include "CTEM.h"
+#include "HRTEM.h"
 #include "multislice.h"
 #include "fft.h"
 #include "fourier_utils.h"
@@ -7,7 +7,7 @@
 using namespace std;
 
 
-CTEM::CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
+HRTEM::HRTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
 			float Cs, float deltaf, float alpha_max)
 	: multislice(E, px, py, tx, ty, tz, filename, s)
 {
@@ -22,7 +22,7 @@ CTEM::CTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vec
 };
 
 
-void CTEM::calcPlaneWave()
+void HRTEM::calcPlaneWave()
 {
 	/*
 	Creates initial wave function with unity real component and zero imaginary component

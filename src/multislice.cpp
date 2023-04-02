@@ -178,14 +178,14 @@ float multislice::totalIntensity(bool det)
 		auto [kx, ky] = reciprocalPoints(this->px, this->py, this->rx, this->ry);
 		for(int i = 0; i < this->px; i++)
 			for(int j = 0; j < this->py; j++) 
-				tot += (pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2)) * this->D(kx[i], ky[j]);	
+				tot += (pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2)) * this->D(kx[i], ky[j]);
 	}
 			
 	else
 	{
 		for(int i = 0; i < this->px; i++)
 			for(int j = 0; j < this->py; j++) 
-				tot += (pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2));
+				tot += pow(this->psi_re[i][j], 2) + pow(this->psi_im[i][j], 2);
 	}
 	return tot;
 };
