@@ -79,7 +79,7 @@ CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string 
 The inputs are as follows:<br>
 E: <br>&emsp;Energy of input beam in eV <br>
 (px, py):<br>&emsp; Dimensions of grid on which calculation is to occur in pixels i.e. the tranmission function, propagator etc. would be calculated on a grid of dimensions (px, py) pixels. <br>
-(px_p, py_p):<br>&emsp; Resolution of STEM scan positions i.e. the number of scan positions in each direction/
+(px_p, py_p):<br>&emsp; Resolution of STEM scan positions i.e. the number of scan positions in each direction. <br>
 (tx, ty, tz):<br>&emsp; Tiling of unit cell.<br>
 filename:<br>&emsp; File name of unit cell. Assumes files is located in directory strcutures/. Currently only .xyz files are supported.<br>
 s:<br>&emsp; Vector of slice locations in fractions of unit cell thickness. For instance, if a unit cell is 3.905 Ang. then s = {.2,.8} will result in slices at .2 $\times$ 3.905 = 0.781, .8 $\times$ 3.905 = 3.124.<br>
