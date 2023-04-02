@@ -75,5 +75,27 @@ HRTEM(float E, int px, int py, int tx, int ty, int tz, string filename, vector<f
 CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
 		float Cs, float deltaf, float alpha_max, bool CoM_dir_x)
 ```
+The inputs are as follows:<br>
+E: <br>&emsp;Energy of input beam in eV <br>
+(px, py):<br>&emsp; Dimensions of grid on which calculation is to occur in pixels i.e. the tranmission function, propagator etc. would be calculated on a grid of dimensions (px, py) pixels. <br>
+(px_p, py_p):<br>&emsp; Resolution of STEM scan positions i.e. the number of scan positions in each direction/
+(tx, ty, tz):<br>&emsp; Tiling of unit cell.<br>
+filename:<br>&emsp; File name of unit cell. Assumes files is located in directory strcutures/. Currently only .xyz files are supported.<br>
+s:<br>&emsp; Vector of slice locations in fractions of unit cell thickness. For instance, if a unit cell is 3.905 Ang. then s = {.2,.8} will result in slices at .2 `\times` 3.905 = 0.781, .8 `\times` 3.905 = 3.124.<br>
+Cs:<br>&emsp; Sperhical abberation of lens in [mm].<br>
+deltaf:<br>&emsp; Lens defocus in Ang.<br>
+alpha_max:<br>&emsp; Aperture opening angle in mrad.<br>
+alpha_min_D:<br>&emsp; minimum detector angle in mrad. <br>
+alpha_max_D:<br>&emsp; maximum detector angle in mrad.<br>
 
 New techniqes can be included by making a new class with the multislice class as parent and specifying the function which determines the detector. You may look at the wiki for details or simply look at one of the techniqes as a template.
+
+You may access any of the internal attributes such as the wave function or intensity by including `"general_purpose_utils.h"` which includes a function `writeToFile` which takes in the file name and 2D array to be written to a file. For example,
+```
+vector<float> s = {1};
+	CoM l(2e5, 64, 64, 128, 128, 1,1, 1, "fig511.xyz", s, 1.3, 500, 8.9, true);
+	writeToFile("I.txt", l.I);
+```
+
+## Class attributes
+All classes have an attribute `layers` which stores the transmission function and propagators for the given layer. For example, continuing from the above example `l.layers[0].t_re` is the real component of the transmission function of the first layer. The propagator can be accessed using `P_re` or `P_im`.
