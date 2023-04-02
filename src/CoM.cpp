@@ -1,10 +1,10 @@
-#include "DPC_COM.h"
+#include "CoM.h"
 #include "STEM.h"
 #include <string>
 #include "fft.h"
 using namespace std;
 
-DPC_CoM::DPC_CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
+CoM::CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string filename, vector<float> &s,
 		float Cs, float deltaf, float alpha_max, bool CoM_dir_x)
 	: STEM(E, px, py, px_p, py_p, tx, ty, tz, filename, s, Cs, deltaf, alpha_max) 
 {
@@ -24,7 +24,7 @@ DPC_CoM::DPC_CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, in
 	};
 };
 
-float DPC_CoM::D(float kx, float ky)
+float CoM::D(float kx, float ky)
 {
 	if(this->CoM_dir_x) return kx;
 	return ky;
