@@ -87,7 +87,7 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	int j;
 	for(auto atom : c.atoms)
 	{
-		j = lindex(atom.zf * c.z());
+		j = lindex(atom.zf);
 		layers[j].atoms.push_back(atom);
 	}
 
