@@ -40,7 +40,8 @@ Now if $\mathcal U = 0$, then the angular spectrum formulation applies to our pr
 
 $$ \psi(r_\perp, z) = \prod \mathcal F^{-1} ``{ P(k_\perp, \Delta z) \mathcal F``{ e^{\mathcal U \Delta z} \psi(r_\perp, 0) ``} ``} $$
 
-where $P(k_\perp, \Delta z)$ is the free-space propagator in reciprical space. The approach is referred to as the multislice approach and is the method used here.
+where $P(k_\perp
+\Delta z)$ is the free-space propagator in reciprical space. The approach is referred to as the multislice approach and is the method used here.
 
 The techniques of electron microscopy can be catigoriezed into two primary modes. HR-TEM (High-Resolution Transmission Electron Microscopy) which uses incident place waves and STEM (Scanning Transmission Electron Mircsocopy) which uses
 a converged probe which scans across the specimenn surface.
@@ -48,7 +49,7 @@ a converged probe which scans across the specimenn surface.
 In STEM, for each probe position, a diffraction pattern is obtained, the detector which measures the intensity pattern 
 consitiues the various STEM techniques. The recorded signal at a given probe position is given by
 
-$$ g(k) = \int ``, dk |I(k)|^2 D(k) $$
+$$ g(k) = \int dk |I(k)|^2 D(k) $$
 
 where $D(k)$ is the detector geometry. For instance, ADFSTEM (Annular-Dark-Field STEM) collects electrons which scatter at high
 angles.
@@ -93,8 +94,8 @@ New techniqes can be included by making a new class with the multislice class as
 You may access any of the internal attributes such as the wave function or intensity by including `"general_purpose_utils.h"` which includes a function `writeToFile` which takes in the file name and 2D array to be written to a file. For example,
 ```
 vector<float> s = {1};
-	CoM l(2e5, 64, 64, 128, 128, 1,1, 1, "fig511.xyz", s, 1.3, 500, 8.9, true);
-	writeToFile("I.txt", l.I);
+CoM l(2e5, 64, 64, 128, 128, 1,1, 1, "fig511.xyz", s, 1.3, 500, 8.9, true);
+writeToFile("I.txt", l.I);
 ```
 
 ## Class attributes
