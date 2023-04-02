@@ -11,6 +11,7 @@
 #include <fstream>
 #include <tuple>
 #include <vector>
+#include <stdexcept>
 
 #include <iostream>
 using namespace std;
@@ -23,6 +24,11 @@ multislice::multislice(float E, int px, int py, int tx, int ty, int tz, string f
 	(tx, ty, tz): tiling of supercell
 	filename: name of .xyz file of crystal
 	*/
+
+	if((tx & (tx - 1)) | (ty & (ty - 1))== 1)
+		throw std::invalid_argument("Ensure tiling is power of two for input into radix-2 FFT.");
+	if(tx != ty)
+		throw std::invalid_argument("Ensure tiling in both directions is the same for input into radix-2 FFT.");
 	
 	this->E = E;
 	this->lambda = relativistic_wavelength(this->E);
