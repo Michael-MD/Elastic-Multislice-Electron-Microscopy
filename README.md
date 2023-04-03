@@ -123,18 +123,49 @@ CoM l(2e5, 64, 64, 128, 128, 1,1, 1, "fig511.xyz", s, 1.3, 500, 8.9, true);
 writeToFile("I.txt", l.I);
 ```
 
-## 3.3 Class attributes
+### 3.3 Class attributes
 All classes have an attribute `layers` which stores the transmission function and propagators for the given layer. For example, continuing from the above example `l.layers[0].t_re` is the real component of the transmission function of the first layer. The propagator can be accessed using `P_re` or `P_im`.
 
 ## 4. Examples
-Here are a few examples to get you up and running. The code to generate the file and the resulting image produced using a python script which I've inlcuded in the repo named visualize.py.
+Here are a few examples to get you up and running. The code to generate the file and the resulting image produced using a python script which I've inlcuded in the repo named visualize.py. STEM techniques will overwrite the wave function for each probe position so you will need to modify the code slightly to save the vector or otherwise. Secondly, HRTEM doesn't have access to a function which calcaultes the intensity but you may do so using the wave function.
+### 4.1 HRTEM
 ```
 #include "general_purpose_utils.h"
 #include "HRTEM.h"
+#include <vector>
+using namespace std;
 
 vector<float> s = {1};
 HRTEM l(2e5, 512, 512, 8,8,1, "fig511.xyz", s, 1.3, 700, 10.37);
 writeToFile("psi_re.txt", l.psi_re);
 writeToFile("psi_im.txt", l.psi_im);
 ```
-![alt text](figures/Fig 5.12.png)
+![alt text](figures/Fig 5_12.png)
+
+### 4.2 ADFSTEM
+```
+#include "general_purpose_utils.h"
+#include "ADFSTEM.h"
+#include <vector>
+using namespace std;
+
+vector<float> s = {1};
+ADFSTEM l(2e5, 1024, 1024, 128, 128, 1,1, 1, "fig511.xyz", s, 1.3, 500, 8.9, 35, 200);
+writeToFile("I.txt", l.I);
+```
+![alt text](figures/Fig 5_21.jpg)
+
+This is a linescan midway through the image obtained in python.
+
+### 4.3 CoM
+```
+#include "general_purpose_utils.h"
+#include "CoM.h"
+#include <vector>
+using namespace std;
+
+vector<float> s = {1};
+CoM l(2e5, 64, 64, 128, 128, 1,1, 1, "fig511.xyz", s, 1.3, 500, 8.9, true);
+writeToFile("I.txt", l.I);
+```
+![alt text](figures/CoM.jpg)
