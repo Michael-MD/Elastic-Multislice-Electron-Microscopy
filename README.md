@@ -5,7 +5,7 @@ This code base simulates various techniques from electron microscopy.
 The code is written with readability in mind rather for ease of understanding rather than speed.
 
 ## 1. Setup
-This code has been tested with C++17, ensure that you place your project in a location which can access the header file of the technique you would like to use. You can clone the repo using the command
+This code has been tested with C++17 on Ubuntu, ensure that you place your project in a location which can access the header file of the technique you would like to use. You can clone the repo using the command
 ```
 git clone https://github.com/Michael-MD/Electron-Microscopy-in-C.git
 ```
@@ -101,17 +101,17 @@ CoM(float E, int px_p, int py_p, int px, int py, int tx, int ty, int tz, string 
 		float Cs, float deltaf, float alpha_max, bool CoM_dir_x)
 ```
 The inputs are as follows:<br>
-E: <br>&emsp;Energy of input beam in eV <br>
-(px, py):<br>&emsp; Dimensions of grid on which calculation is to occur in pixels i.e. the tranmission function, propagator etc. would be calculated on a grid of dimensions (px, py) pixels. <br>
-(px_p, py_p):<br>&emsp; Resolution of STEM scan positions i.e. the number of scan positions in each direction. <br>
-(tx, ty, tz):<br>&emsp; Tiling of unit cell.<br>
-filename:<br>&emsp; File name of unit cell. Assumes files is located in directory strcutures/. Currently only .xyz files are supported.<br>
-s:<br>&emsp; Vector of slice locations in fractions of unit cell thickness. For instance, if a unit cell is 3.905 Ang. then s = {.2,.8} will result in slices at .2 $\times$ 3.905 = 0.781, .8 $\times$ 3.905 = 3.124.<br>
-Cs:<br>&emsp; Sperhical abberation of lens in [mm].<br>
-deltaf:<br>&emsp; Lens defocus in Ang.<br>
-alpha_max:<br>&emsp; Aperture opening angle in mrad.<br>
-alpha_min_D:<br>&emsp; minimum detector angle in mrad. <br>
-alpha_max_D:<br>&emsp; maximum detector angle in mrad.<br>
+<b> E </b>: <br>&emsp;Energy of input beam in eV <br>
+<b>(px, py)</b>:<br>&emsp; Dimensions of grid on which calculation is to occur in pixels i.e. the tranmission function, propagator etc. would be calculated on a grid of dimensions (px, py) pixels. <br>
+<b>(px_p, py_p)</b>:<br>&emsp; Resolution of STEM scan positions i.e. the number of scan positions in each direction. <br>
+<b>(tx, ty, tz)</b>:<br>&emsp; Tiling of unit cell.<br>
+<b>filename</b>:<br>&emsp; File name of unit cell. Assumes files is located in directory strcutures/. Currently only .xyz files are supported.<br>
+<b>s</b>:<br>&emsp; Vector of slice locations in fractions of unit cell thickness. For instance, if a unit cell is 3.905 Ang. then s = {.2,.8} will result in slices at .2 $\times$ 3.905 = 0.781, .8 $\times$ 3.905 = 3.124.<br>
+<b>Cs</b>:<br>&emsp; Sperhical abberation of lens in [mm].<br>
+<b>deltaf</b>:<br>&emsp; Lens defocus in Ang.<br>
+<b>alpha_max</b>:<br>&emsp; Aperture opening angle in mrad.<br>
+<b>alpha_min_D</b>:<br>&emsp; minimum detector angle in mrad. <br>
+<b>alpha_max_D</b>:<br>&emsp; maximum detector angle in mrad.<br>
 
 New techniqes can be made by inheritying the multislice class and specifying the function which determines the detector. You may look at the wiki for details or simply look at one of the already existing techniqes as a template.
 
@@ -125,6 +125,8 @@ writeToFile("I.txt", l.I);
 
 ### 3.3 Class attributes
 All classes have an attribute `layers` which stores the transmission function and propagators for the given layer. For example, continuing from the above example `l.layers[0].t_re` is the real component of the transmission function of the first layer. The propagator can be accessed using `P_re` or `P_im`.
+
+All classes have attribtues `psi_re` and `psi_im` while only STEM techniques have `I` which stores the intensity.
 
 ## 4. Examples
 Here are a few examples to get you up and running. The code to generate the file and the resulting image produced using a python script which I've inlcuded in the repo named visualize.py. STEM techniques will overwrite the wave function for each probe position so you will need to modify the code slightly to save the vector or otherwise. Secondly, HRTEM doesn't have access to a function which calcaultes the intensity but you may do so using the wave function.
