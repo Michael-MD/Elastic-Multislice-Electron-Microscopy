@@ -140,7 +140,7 @@ HRTEM l(2e5, 512, 512, 8,8,1, "fig511.xyz", s, 1.3, 700, 10.37);
 writeToFile("psi_re.txt", l.psi_re);
 writeToFile("psi_im.txt", l.psi_im);
 ```
-![alt text](figures/Fig 5_12.png)
+![alt text](figures/Fig_5_12.png)
 
 ### 4.2 ADFSTEM
 ```
@@ -153,7 +153,7 @@ vector<float> s = {1};
 ADFSTEM l(2e5, 1024, 1024, 128, 128, 1,1, 1, "fig511.xyz", s, 1.3, 500, 8.9, 35, 200);
 writeToFile("I.txt", l.I);
 ```
-![alt text](figures/Fig 5_21.jpg)
+![alt text](figures/5_21.jpg)
 
 This is a linescan midway through the image obtained in python.
 
