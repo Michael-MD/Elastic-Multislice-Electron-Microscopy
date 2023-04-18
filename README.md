@@ -1,8 +1,7 @@
-# Electron-Microscopy-in-C
+# Elastic-Multislice-Electron-Microscopy
 Simulation of elastic scattering in electron microscopy using the multislice algorithm. Simulations include various STEM and TEM techniques such as ADFSTEM, BFSTEM, ABFSTEM and CoM.
 
-This code base simulates various techniques from electron microscopy. 
-The code is written with readability in mind rather for ease of understanding rather than speed.
+The code is written with readability and ease of understanding rather than speed. I've written the code such that it can be easily expanded upon. For example, to begin incorporating inelastic scattering one can calculate the transition potentials and reuse the multislice class. Further, addition elastic scattering techniques can be included by simply specifying the detector function.
 
 ## 1. Setup
 This code has been tested with C++17 on Ubuntu, ensure that you place your project in a location which can access the header file of the technique you would like to use. You can clone the repo using the command
